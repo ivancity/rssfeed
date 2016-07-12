@@ -1,12 +1,18 @@
-package design.ivan.app.weatherrss.Data;
+package design.ivan.app.weatherrss.Model;
 
-/**
- * Created by ivanm on 7/12/16.
- */
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+@Root(name = "wind")
 public class Wind {
+    @Element(name = "name")
     String name;
+    @Element(name = "speedmin")
     String speedMin;
+    @Element(name = "speedmax")
     String speedMax;
+
+    public Wind(){}
 
     public String getName() {
         return name;

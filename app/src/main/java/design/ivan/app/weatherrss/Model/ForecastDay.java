@@ -1,15 +1,25 @@
-package design.ivan.app.weatherrss.Data;
+package design.ivan.app.weatherrss.Model;
 
-/**
- * Created by ivanm on 7/12/16.
- */
-public class ForecastInfo {
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementArray;
+import org.simpleframework.xml.Root;
+
+@Root(name = "day")
+public class ForecastDay {
+    @Element(name = "phenomenon")
     String phenomenon;
+    @Element(name = "tempmin")
     String tempMin;
+    @Element(name = "tempmax")
     String tempMax;
+    @Element(name = "text")
     String description;
+    @ElementArray(name = "place")
     Place[] arrayPlaces;
+    @ElementArray(name = "wind")
     Wind[] arrayWind;
+
+    public ForecastDay(){}
 
     public String getPhenomenon() {
         return phenomenon;

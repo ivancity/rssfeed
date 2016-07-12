@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.util.SparseArray;
 
-import design.ivan.app.weatherrss.Data.Forecast;
+import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.Utility;
 
 /**

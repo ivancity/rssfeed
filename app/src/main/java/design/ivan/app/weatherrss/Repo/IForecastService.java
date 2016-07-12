@@ -3,7 +3,7 @@ package design.ivan.app.weatherrss.Repo;
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
-import design.ivan.app.weatherrss.Data.Forecast;
+import design.ivan.app.weatherrss.Model.Forecast;
 
 /**
  * Created by ivanm on 7/12/16.
