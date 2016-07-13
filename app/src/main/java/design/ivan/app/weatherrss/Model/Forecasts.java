@@ -11,4 +11,8 @@ public class Forecasts {
     List<Forecast> forecasts;
 
     public Forecasts(){}
+
+    public List<Forecast> getForecasts() { return forecasts; }
+
+    public void setForecasts(List<Forecast> forecasts) { this.forecasts = forecasts; }
 }

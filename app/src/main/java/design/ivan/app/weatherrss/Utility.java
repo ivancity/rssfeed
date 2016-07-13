@@ -3,6 +3,8 @@ package design.ivan.app.weatherrss;
 import android.support.v4.util.ArrayMap;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
+
 import design.ivan.app.weatherrss.Model.Forecast;
 
 /**
@@ -18,6 +20,14 @@ public class Utility {
             forecastSparseArray.append(i, forecast);
         }
         return forecastSparseArray;
+    }
+
+    public static SparseArray<Forecast> listToSparseArray(ArrayList<Forecast> forecast){
+        SparseArray<Forecast> sparseArray = new SparseArray<>();
+        for (int i = 0; i < forecast.size(); i++) {
+            sparseArray.put(i, forecast.get(i));
+        }
+        return sparseArray;
     }
 
 }

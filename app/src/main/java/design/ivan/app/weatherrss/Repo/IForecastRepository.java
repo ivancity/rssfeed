@@ -5,9 +5,6 @@ import android.util.SparseArray;
 
 import design.ivan.app.weatherrss.Model.Forecast;
 
-/**
- * Created by ivanm on 7/12/16.
- */
 public interface IForecastRepository {
     interface LoadForecastCallback {
         void onForecastLoaded(SparseArray<Forecast> forecastSparseArray);

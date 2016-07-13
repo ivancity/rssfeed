@@ -2,11 +2,17 @@ package design.ivan.app.weatherrss.MainScreen;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.util.SparseArray;
 
+import java.util.ArrayList;
+
+import design.ivan.app.weatherrss.MainActivity;
+import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.Model.Forecasts;
 import design.ivan.app.weatherrss.Model.RssForecast;
 import design.ivan.app.weatherrss.R;
 import design.ivan.app.weatherrss.Repo.IForecastRepository;
+import design.ivan.app.weatherrss.Utility;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,7 +27,9 @@ public class MainPresenter implements IMainContract.ActionListener, Callback<For
     private static final String TAG = "MainPresenter";
 
     IMainContract.MainView mainView;
-    IForecastRepository forecastRepository;
+    private IForecastRepository forecastRepository;
+    private Retrofit retrofit;
+    private RssForecast rssService;
 
     public MainPresenter(@NonNull IForecastRepository forecastRepository, IMainContract.MainView view){
         this.forecastRepository = forecastRepository;
@@ -32,25 +40,34 @@ public class MainPresenter implements IMainContract.ActionListener, Callback<For
 
     @Override
     public void getRSSFeed() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-                .build();
-        RssForecast rssService = retrofit.create(RssForecast.class);
-
-        mainView.showSnackbar(R.string.syncing);
-        Call<Forecasts> call = rssService.getForecasts();
-        call.enqueue(this);
+        initConnection();
+        doWebRequest();
     }
 
     @Override
     public void loadFeed() {
-
+        forecastRepository.getForecastList(new IForecastRepository.LoadForecastCallback() {
+            @Override
+            public void onForecastLoaded(SparseArray<Forecast> forecastSparseArray) {
+                Log.d(TAG, "onForecastLoaded: " + forecastSparseArray);
+            }
+        });
     }
 
     @Override
     public void initConnection() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .build();
+        rssService = retrofit.create(RssForecast.class);
+    }
 
+    @Override
+    public void doWebRequest() {
+        mainView.showSnackbar(R.string.syncing, true);
+        Call<Forecasts> call = rssService.getForecasts();
+        call.enqueue(this);
     }
 
     //++ End ActionListener implementation ++//
@@ -59,17 +76,37 @@ public class MainPresenter implements IMainContract.ActionListener, Callback<For
 
     @Override
     public void onResponse(Call<Forecasts> call, Response<Forecasts> response) {
-        Log.d(TAG, "onResponse: response: " + response.body());
-        int networkCode = response.raw().networkResponse().code();
-        if(networkCode == 200){
-            //TODO do something with parsed content
+        ((MainActivity)mainView).runOnUiThread(new Runnable() {
+            public void run() {
+                mainView.hideSnackbar();
+            }
+        });
+        //int networkCode = response.raw().networkResponse().code();
+        if(response.isSuccessful()){
+            ArrayList<Forecast> forecastList = (ArrayList<Forecast>) response.body().getForecasts();
+            if(forecastList.size()<=0)
+                return;
+            SparseArray<Forecast> forecastSparseArray = Utility.listToSparseArray(forecastList);
+            forecastRepository.saveArrayForecast(forecastSparseArray, new IForecastRepository.SaveForecastArrayCallback() {
+                @Override
+                public void onSavedArray(boolean saved) {
+                    Log.d(TAG, "onSavedArray: Forecasts cached");
+                    loadFeed();
+                }
+            });
         }
     }
 
     @Override
     public void onFailure(Call<Forecasts> call, Throwable t) {
         Log.d(TAG, "onFailure: message: " + t.getMessage());
+        ((MainActivity)mainView).runOnUiThread(new Runnable() {
+            public void run() {
+
+            }
+        });
     }
 
     //++ End Retrofit 2 callback implementation ++//
+
 }
