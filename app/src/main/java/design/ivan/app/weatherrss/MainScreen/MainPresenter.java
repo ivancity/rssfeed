@@ -102,7 +102,7 @@ public class MainPresenter implements IMainContract.ActionListener, Callback<For
         Log.d(TAG, "onFailure: message: " + t.getMessage());
         ((MainActivity)mainView).runOnUiThread(new Runnable() {
             public void run() {
-
+                mainView.showSnackbar(R.string.error_caching_list);
             }
         });
     }
