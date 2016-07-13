@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherRSS</string>
+    <string name="no_data">Nothing to show</string>
+    <string name="syncing">Syncing Weather Data</string>
 </resources>

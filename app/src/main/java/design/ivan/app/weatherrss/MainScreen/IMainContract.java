@@ -5,6 +5,8 @@ package design.ivan.app.weatherrss.MainScreen;
  */
 public interface IMainContract {
     interface MainView {
+        void showSnackbar(int resMessage);
+        void hideSnackbar();
         void setProgressIndicator(boolean active);
         void hideMessage();
         void showMessage(String message);
@@ -13,5 +15,6 @@ public interface IMainContract {
     interface ActionListener {
         void getRSSFeed();
         void loadFeed();
+        void initConnection();
     }
 }
