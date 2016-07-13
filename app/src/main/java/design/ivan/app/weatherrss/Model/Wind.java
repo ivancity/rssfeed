@@ -3,7 +3,7 @@ package design.ivan.app.weatherrss.Model;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(name = "wind")
+@Root(name = "wind", strict = false)
 public class Wind {
     @Element(name = "name")
     String name;
@@ -11,6 +11,8 @@ public class Wind {
     String speedMin;
     @Element(name = "speedmax")
     String speedMax;
+    @Element(name = "direction")
+    String direction;
 
     public Wind(){}
 
@@ -37,4 +39,8 @@ public class Wind {
     public void setSpeedMax(String speedMax) {
         this.speedMax = speedMax;
     }
+
+    public String getDirection() { return direction; }
+
+    public void setDirection(String direction) { this.direction = direction; }
 }

@@ -1,11 +1,12 @@
 package design.ivan.app.weatherrss.Model;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementArray;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
 
-/**
- * Created by ivanm on 7/13/16.
- */
+import java.util.List;
+
+@Root(name = "night", strict = false)
 public class ForecastNight {
     @Element(name = "phenomenon")
     String phenomenon;
@@ -15,10 +16,10 @@ public class ForecastNight {
     String tempMax;
     @Element(name = "text")
     String description;
-    @ElementArray(name = "place")
-    Place[] arrayPlaces;
-    @ElementArray(name = "wind")
-    Wind[] arrayWind;
+    @ElementList(entry = "place", inline = true, required = false)
+    List<Place> arrayPlaces;
+    @ElementList(entry = "wind", inline = true, required = false)
+    List<Wind> arrayWind;
 
     public ForecastNight(){}
 
@@ -54,19 +55,17 @@ public class ForecastNight {
         this.description = description;
     }
 
-    public Place[] getArrayPlaces() {
+    public List<Place> getArrayPlaces() {
         return arrayPlaces;
     }
 
-    public void setArrayPlaces(Place[] arrayPlaces) {
+    public void setArrayPlaces(List<Place> arrayPlaces) {
         this.arrayPlaces = arrayPlaces;
     }
 
-    public Wind[] getArrayWind() {
+    public List<Wind> getArrayWind() {
         return arrayWind;
     }
 
-    public void setArrayWind(Wind[] arrayWind) {
-        this.arrayWind = arrayWind;
-    }
+    public void setArrayWind(List<Wind> arrayWind) { this.arrayWind = arrayWind; }
 }

@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 
 @Root(name = "forecast")
 public class Forecast {
-    @Attribute(name = "date")
+    @Attribute(name = "date", required = false)
     String date;
     @Element(name = "day")
     ForecastDay day;

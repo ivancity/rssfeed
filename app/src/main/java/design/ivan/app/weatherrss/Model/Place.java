@@ -5,11 +5,13 @@ import org.simpleframework.xml.Root;
 
 @Root(name = "place")
 public class Place {
-    @Element(name = "name")
+    @Element(name = "name", required = false)
     String name;
-    @Element(name = "phenomenon")
+    @Element(name = "phenomenon", required = false)
     String phenomenon;
-    @Element(name = "tempmax")
+    @Element(name = "tempmin", required = false)
+    String tempMin;
+    @Element(name = "tempmax", required = false)
     String tempMax;
 
     public Place(){}
@@ -30,11 +32,15 @@ public class Place {
         this.phenomenon = phenomenon;
     }
 
-    public String getTempMax() {
-        return tempMax;
+    public String getTempMin() {
+        return tempMin;
     }
 
-    public void setTempMax(String tempMax) {
-        this.tempMax = tempMax;
+    public void setTempMin(String tempMin) {
+        this.tempMin = tempMin;
     }
+
+    public String getTempMax() { return tempMax; }
+
+    public void setTempMax(String tempMax) { this.tempMax = tempMax; }
 }
