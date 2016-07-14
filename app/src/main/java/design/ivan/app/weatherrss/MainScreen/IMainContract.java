@@ -12,7 +12,7 @@ public interface IMainContract {
         void hideSnackbar();
         void setProgressIndicator(boolean active);
         void hideMessage();
-        void showMessage(String message);
+        void showMessage(@StringRes int message);
         void enableUI(boolean activate);
     }
     interface ActionListener {
