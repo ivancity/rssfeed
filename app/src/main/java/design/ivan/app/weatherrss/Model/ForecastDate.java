@@ -21,6 +21,7 @@ public class ForecastDate {
     @ElementList(entry = "wind", inline = true, required = false)
     ArrayList<Wind> arrayWind;
     String windMin, windMax;
+    String tempMinWord, tempMaxWord;
 
     public ForecastDate(){}
 
@@ -77,4 +78,20 @@ public class ForecastDate {
     public String getWindMax() { return windMax; }
 
     public void setWindMax(String windMax) { this.windMax = windMax; }
+
+    public String getTempMinWord() {
+        return tempMinWord;
+    }
+
+    public void setTempMinWord(String tempMinWord) {
+        this.tempMinWord = tempMinWord;
+    }
+
+    public String getTempMaxWord() {
+        return tempMaxWord;
+    }
+
+    public void setTempMaxWord(String tempMaxWord) {
+        this.tempMaxWord = tempMaxWord;
+    }
 }
