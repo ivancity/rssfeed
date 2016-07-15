@@ -84,12 +84,10 @@ public class MainPresenter implements IMainContract.ActionListener, Callback<For
         });
         //int networkCode = response.raw().networkResponse().code();
         if(response.isSuccessful()){
-            ArrayList<Forecast> forecastList = (ArrayList<Forecast>) response.body().getForecasts();
+            ArrayList<Forecast> forecastList = response.body().getForecasts();
             if(forecastList.size()<=0)
                 return;
             SparseArray<Forecast> forecastSparseArray = Utility.prepareSparseArray(forecastList);
-
-
 
             forecastRepository.saveArrayForecast(forecastSparseArray, new IForecastRepository.SaveForecastArrayCallback() {
                 @Override

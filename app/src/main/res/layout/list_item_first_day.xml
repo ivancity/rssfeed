@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:columnCount="2">
-
     <TextView
         android:id="@+id/main_list_item_title"
         android:gravity="center_horizontal"
@@ -14,7 +13,6 @@
         app:layout_columnWeight="1"
         app:layout_gravity="fill_horizontal"
         tools:text="Day"/>
-
     <TextView
         android:id="@+id/main_list_item_max_temp"
         android:layout_width="0dp"
@@ -52,5 +50,28 @@
         app:layout_columnWeight="1"
         app:layout_gravity="fill_horizontal"
         tools:text="1kn"/>
-
+    <android.support.v4.widget.Space
+        android:layout_height="15dp"
+        app:layout_columnSpan="2"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"/>
+    <TextView
+        android:id="@+id/main_list_item_temp_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_columnSpan="2"
+        app:layout_rowWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:text="As warm as twelve degrees and as cold as three degrees "/>
+    <android.support.v4.widget.Space
+        android:layout_height="15dp"
+        app:layout_columnSpan="2"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"/>
+    <TextView
+        android:id="@+id/main_list_item_weather_description"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_columnSpan="2"
+        app:layout_rowWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:text="Some really long description about the weather that we have here and some more text to fill in "/>
 </android.support.v7.widget.GridLayout>

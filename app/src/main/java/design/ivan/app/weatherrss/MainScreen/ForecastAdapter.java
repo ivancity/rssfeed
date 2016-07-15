@@ -82,8 +82,10 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         if(isCurrentDay){
             holder.windMinNight.setText(night.getWindMin());
             holder.windMaxNight.setText(night.getWindMax());
+            holder.nightWeatherDesc.setText(night.getDescription());
             holder.windMinDay.setText(day.getWindMin());
             holder.windMaxDay.setText(day.getWindMax());
+            holder.dayWeatherDesc.setText(day.getDescription());
         }
 
         holder.tempMinNight.setText(night.getTempMin());
@@ -121,6 +123,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         TextView tempMaxNight, tempMinNight;
         TextView windMaxNight, windMinNight;
         TextView dayTitle, nightTitle;
+        TextView tempText;
+        TextView dayWeatherDesc, nightWeatherDesc;
 
         public ForecastViewHolder(View itemView) {
             super(itemView);
@@ -131,6 +135,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                 windMaxDay = ButterKnife.findById(itemDay, R.id.main_list_item_max_wind);
                 windMinDay = ButterKnife.findById(itemDay, R.id.main_list_item_min_wind);
                 dayTitle = ButterKnife.findById(itemDay, R.id.main_list_item_title);
+                tempText = ButterKnife.findById(itemDay, R.id.main_list_item_temp_text);
+                dayWeatherDesc = ButterKnife.findById(itemDay, R.id.main_list_item_weather_description);
             }
             if (itemNight != null) {
                 tempMaxNight = ButterKnife.findById(itemNight, R.id.main_list_item_max_temp);
@@ -138,6 +144,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                 windMaxNight = ButterKnife.findById(itemNight, R.id.main_list_item_max_wind);
                 windMinNight = ButterKnife.findById(itemNight, R.id.main_list_item_min_wind);
                 nightTitle = ButterKnife.findById(itemNight, R.id.main_list_item_title);
+                tempText = ButterKnife.findById(itemNight, R.id.main_list_item_temp_text);
+                nightWeatherDesc = ButterKnife.findById(itemNight, R.id.main_list_item_weather_description);
             }
 
 

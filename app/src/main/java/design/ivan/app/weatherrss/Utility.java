@@ -3,6 +3,7 @@ package design.ivan.app.weatherrss;
 import android.support.v4.util.ArrayMap;
 import android.util.SparseArray;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import design.ivan.app.weatherrss.Model.Forecast;
@@ -29,11 +30,25 @@ public class Utility {
         SparseArray<Forecast> sparseArray = new SparseArray<>();
         for (int i = 0; i < forecastList.size(); i++) {
             selectedForecast = forecastList.get(i);
+            checkTextEncoding(selectedForecast);
             initWindReadings(selectedForecast.getDay());
             initWindReadings(selectedForecast.getNight());
             sparseArray.put(i, selectedForecast);
         }
         return sparseArray;
+    }
+
+    public static void checkTextEncoding(Forecast forecast){
+        String dayDesc = forecast.getDay().getDescription();
+        String nightDesc = forecast.getNight().getDescription();
+        try {
+            String nightUTF8 = new String(nightDesc.getBytes("ISO-8859-1"), "UTF-8");
+            forecast.getNight().setDescription(nightUTF8);
+            String dayUTF8 = new String(dayDesc.getBytes("ISO-8859-1"), "UTF-8");
+            forecast.getDay().setDescription(dayUTF8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void initWindReadings(ForecastDate forecastDate){
