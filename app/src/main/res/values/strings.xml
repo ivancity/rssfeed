@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">WeatherRSS</string>
+
+    <!-- Main Activity -->
     <string name="no_data">Nothing to show</string>
     <string name="syncing">Syncing Weather Data</string>
     <string name="error_caching_list">Something went wrong while syncing your data</string>
+    <string name="temp_max">Temp. Max</string>
+    <string name="temp_min">Temp. Min</string>
 </resources>

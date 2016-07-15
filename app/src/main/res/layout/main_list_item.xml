@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_list_item_first"
+    android:id="@+id/layout_list_item"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/item_date_title"
         android:layout_width="match_parent"
@@ -14,12 +14,13 @@
         tools:text="12-7-2016"/>
     <include
         android:id="@+id/item_day"
-        layout="@layout/list_item_first_day"
+        layout="@layout/main_list_item_generic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <include
         android:id="@+id/item_night"
-        layout="@layout/list_item_first_day"
+        layout="@layout/main_list_item_generic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -6,4 +6,6 @@
     <!-- Main Screen -->
     <dimen name="list_item_first_high">90dp</dimen>
     <dimen name="list_item_first_low">40dp</dimen>
+    <dimen name="list_item_text_high">40sp</dimen>
+    <dimen name="list_item_text_low">20sp</dimen>
 </resources>

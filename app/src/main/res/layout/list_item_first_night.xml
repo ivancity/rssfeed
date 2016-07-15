@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:columnCount="2">
+
+    <TextView
+        android:id="@+id/main_list_night_title"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_columnSpan="2"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:text="Night"/>
+
+    <TextView
+        android:id="@+id/main_list_night_max_temp"
+        android:layout_width="0dp"
+        android:maxHeight="@dimen/list_item_first_high"
+        android:maxWidth="@dimen/list_item_first_high"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/list_item_text_high"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:text="19ºC" />
+    <TextView
+        android:id="@+id/main_list_night_max_wind"
+        android:layout_width="0dp"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/list_item_text_high"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:text="2kn"/>
+
+    <TextView
+        android:id="@+id/main_list_night_min_temp"
+        android:layout_width="0dp"
+        android:maxHeight="@dimen/list_item_first_low"
+        android:maxWidth="@dimen/list_item_first_low"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/list_item_text_low"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:text="10ºC"/>
+    <TextView
+        android:id="@+id/main_list_night_min_wind"
+        android:layout_width="0dp"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/list_item_text_low"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:text="1kn"/>
+
+
+</android.support.v7.widget.GridLayout>
