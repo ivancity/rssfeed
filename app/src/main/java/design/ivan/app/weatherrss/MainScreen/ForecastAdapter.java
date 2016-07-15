@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.R;
 
 /**
@@ -27,6 +29,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     Context context;
     ForecastAdapterOnClickHandler clickHandler;
+    private SparseArray<Forecast> forecastSparseArray;
 
     public ForecastAdapter(Context context, ForecastAdapterOnClickHandler clickHandler){
         this.context = context;
@@ -62,12 +65,36 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     @Override
     public void onBindViewHolder(ForecastViewHolder holder, int position) {
+        boolean isCurrentDay;
+        Forecast forecast = forecastSparseArray.valueAt(position);
+        switch (getItemViewType(position)){
+            case VIEWTYPE_CURRENT:
+                isCurrentDay = true;
+                break;
+            default:
+                isCurrentDay = false;
+        }
+
+        if(isCurrentDay){
+            //TODO handle wind stuff
+
+        }
+
+        //TODO handle temperature which both view types have
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if(forecastSparseArray == null) return 0;
+        return forecastSparseArray.size();
+    }
+
+    public void loadSparseArray(SparseArray<Forecast> forecastSparseArray){
+        this.forecastSparseArray = forecastSparseArray;
+        notifyDataSetChanged();
+        //TODO consider modifying UI if sparse array is empty at this point.
     }
 
     public class ForecastViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

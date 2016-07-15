@@ -86,7 +86,7 @@ public class MainPresenter implements IMainContract.ActionListener, Callback<For
             ArrayList<Forecast> forecastList = (ArrayList<Forecast>) response.body().getForecasts();
             if(forecastList.size()<=0)
                 return;
-            SparseArray<Forecast> forecastSparseArray = Utility.listToSparseArray(forecastList);
+            SparseArray<Forecast> forecastSparseArray = Utility.prepareSparseArray(forecastList);
             forecastRepository.saveArrayForecast(forecastSparseArray, new IForecastRepository.SaveForecastArrayCallback() {
                 @Override
                 public void onSavedArray(boolean saved) {

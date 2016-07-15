@@ -4,7 +4,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Root(name = "night", strict = false)
 public class ForecastNight {
@@ -17,9 +17,10 @@ public class ForecastNight {
     @Element(name = "text")
     String description;
     @ElementList(entry = "place", inline = true, required = false)
-    List<Place> arrayPlaces;
+    ArrayList<Place> arrayPlaces;
     @ElementList(entry = "wind", inline = true, required = false)
-    List<Wind> arrayWind;
+    ArrayList<Wind> arrayWind;
+    String windMax, windMin;
 
     public ForecastNight(){}
 
@@ -55,17 +56,25 @@ public class ForecastNight {
         this.description = description;
     }
 
-    public List<Place> getArrayPlaces() {
+    public ArrayList<Place> getArrayPlaces() {
         return arrayPlaces;
     }
 
-    public void setArrayPlaces(List<Place> arrayPlaces) {
+    public void setArrayPlaces(ArrayList<Place> arrayPlaces) {
         this.arrayPlaces = arrayPlaces;
     }
 
-    public List<Wind> getArrayWind() {
+    public ArrayList<Wind> getArrayWind() {
         return arrayWind;
     }
 
-    public void setArrayWind(List<Wind> arrayWind) { this.arrayWind = arrayWind; }
+    public void setArrayWind(ArrayList<Wind> arrayWind) { this.arrayWind = arrayWind; }
+
+    public String getWindMin() { return windMin; }
+
+    public void setWindMin(String windMin) { this.windMin = windMin; }
+
+    public String getWindMax() { return windMax; }
+
+    public void setWindMax(String windMax) { this.windMax = windMax; }
 }

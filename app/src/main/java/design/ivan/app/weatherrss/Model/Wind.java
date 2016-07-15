@@ -8,9 +8,9 @@ public class Wind {
     @Element(name = "name")
     String name;
     @Element(name = "speedmin")
-    String speedMin;
+    int speedMin;
     @Element(name = "speedmax")
-    String speedMax;
+    int speedMax;
     @Element(name = "direction")
     String direction;
 
@@ -24,19 +24,19 @@ public class Wind {
         this.name = name;
     }
 
-    public String getSpeedMin() {
+    public int getSpeedMin() {
         return speedMin;
     }
 
-    public void setSpeedMin(String speedMin) {
+    public void setSpeedMin(int speedMin) {
         this.speedMin = speedMin;
     }
 
-    public String getSpeedMax() {
+    public int getSpeedMax() {
         return speedMax;
     }
 
-    public void setSpeedMax(String speedMax) {
+    public void setSpeedMax(int speedMax) {
         this.speedMax = speedMax;
     }
 
