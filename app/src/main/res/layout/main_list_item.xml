@@ -9,7 +9,7 @@
         android:id="@+id/item_date_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         tools:text="12-7-2016"/>
     <include
@@ -22,5 +22,4 @@
         layout="@layout/main_list_item_generic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

@@ -7,4 +7,6 @@
     <string name="error_caching_list">Something went wrong while syncing your data</string>
     <string name="temp_max">Temp. Max</string>
     <string name="temp_min">Temp. Min</string>
+    <string name="day">Day</string>
+    <string name="night">Night</string>
 </resources>

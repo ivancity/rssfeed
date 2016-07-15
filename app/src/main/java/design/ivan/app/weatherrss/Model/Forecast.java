@@ -9,10 +9,9 @@ public class Forecast {
     @Attribute(name = "date", required = false)
     String date;
     @Element(name = "day")
-    ForecastDay day;
+    ForecastDate day;
     @Element(name = "night")
-    ForecastNight night;
-
+    ForecastDate night;
     public Forecast(){}
 
     public String getDate() {
@@ -23,19 +22,19 @@ public class Forecast {
         this.date = date;
     }
 
-    public ForecastDay getDay() {
+    public ForecastDate getDay() {
         return day;
     }
 
-    public void setDay(ForecastDay day) {
+    public void setDay(ForecastDate day) {
         this.day = day;
     }
 
-    public ForecastNight getNight() {
+    public ForecastDate getNight() {
         return night;
     }
 
-    public void setNight(ForecastNight night) {
+    public void setNight(ForecastDate night) {
         this.night = night;
     }
 }

@@ -50,6 +50,7 @@ public class MainPresenter implements IMainContract.ActionListener, Callback<For
             @Override
             public void onForecastLoaded(SparseArray<Forecast> forecastSparseArray) {
                 Log.d(TAG, "onForecastLoaded: " + forecastSparseArray);
+                mainView.loadData(forecastSparseArray);
             }
         });
     }
@@ -87,6 +88,9 @@ public class MainPresenter implements IMainContract.ActionListener, Callback<For
             if(forecastList.size()<=0)
                 return;
             SparseArray<Forecast> forecastSparseArray = Utility.prepareSparseArray(forecastList);
+
+
+
             forecastRepository.saveArrayForecast(forecastSparseArray, new IForecastRepository.SaveForecastArrayCallback() {
                 @Override
                 public void onSavedArray(boolean saved) {

@@ -6,11 +6,10 @@ import android.util.SparseArray;
 import java.util.ArrayList;
 
 import design.ivan.app.weatherrss.Model.Forecast;
+import design.ivan.app.weatherrss.Model.ForecastDate;
 import design.ivan.app.weatherrss.Model.Wind;
 
-/**
- * Created by ivanm on 7/12/16.
- */
+
 public class Utility {
     private static final String TAG = "Utility";
 
@@ -30,25 +29,33 @@ public class Utility {
         SparseArray<Forecast> sparseArray = new SparseArray<>();
         for (int i = 0; i < forecastList.size(); i++) {
             selectedForecast = forecastList.get(i);
-            initWindReadings(selectedForecast);
+            initWindReadings(selectedForecast.getDay());
+            initWindReadings(selectedForecast.getNight());
             sparseArray.put(i, selectedForecast);
         }
         return sparseArray;
     }
 
-    public static void initWindReadings(Forecast forecast){
-        //TODO iterate in wind list of night and day and get min and max winds
-        Wind wind;
-        int speedMax, speedMin;
-        ArrayList<Wind>windList = forecast.getDay().getArrayWind();
+    public static void initWindReadings(ForecastDate forecastDate){
+        int speedMax, speedMin, temp;
+        ArrayList<Wind>windList = forecastDate.getArrayWind();
         if(windList == null)
             return;
 
-        for (int i = 0; i < windList.size(); i++) {
-            wind = windList.get(i);
-            speedMax = wind.getSpeedMax();
-        }
+        speedMax = windList.get(0).getSpeedMax();
+        speedMin = windList.get(0).getSpeedMin();
+        for (int i = 1; i < windList.size(); i++) {
+            temp = windList.get(i).getSpeedMax();
+            if(temp > speedMax)
+                speedMax = temp;
 
+            temp = windList.get(i).getSpeedMin();
+            if(temp < speedMin)
+                speedMin = temp;
+        }
+        forecastDate.setWindMax(String.valueOf(speedMax));
+        forecastDate.setWindMin(String.valueOf(speedMin));
     }
+
 
 }

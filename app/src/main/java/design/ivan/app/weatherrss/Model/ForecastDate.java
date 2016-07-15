@@ -6,8 +6,8 @@ import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
 
-@Root(name = "night", strict = false)
-public class ForecastNight {
+@Root(strict = false)
+public class ForecastDate {
     @Element(name = "phenomenon")
     String phenomenon;
     @Element(name = "tempmin")
@@ -20,9 +20,9 @@ public class ForecastNight {
     ArrayList<Place> arrayPlaces;
     @ElementList(entry = "wind", inline = true, required = false)
     ArrayList<Wind> arrayWind;
-    String windMax, windMin;
+    String windMin, windMax;
 
-    public ForecastNight(){}
+    public ForecastDate(){}
 
     public String getPhenomenon() {
         return phenomenon;

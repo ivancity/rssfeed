@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:columnCount="2">
     <TextView
-        android:id="@+id/main_list_generic_title"
+        android:id="@+id/main_list_item_title"
         android:gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_columnSpan="2"
@@ -16,7 +16,7 @@
     <TextView
         android:id="@+id/main_list_title_temp_max"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="@string/temp_max"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_columnWeight="1"
@@ -24,7 +24,7 @@
         app:layout_rowWeight="1"/>
     <TextView
         android:id="@+id/main_list_item_max_temp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_gravity="fill"
         app:layout_columnWeight="1"
@@ -32,7 +32,7 @@
     <TextView
         android:id="@+id/main_list_title_temp_min"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="@string/temp_min"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_columnWeight="1"
@@ -40,7 +40,7 @@
         app:layout_rowWeight="1"/>
     <TextView
         android:id="@+id/main_list_item_min_temp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_gravity="fill"
         app:layout_columnWeight="1"

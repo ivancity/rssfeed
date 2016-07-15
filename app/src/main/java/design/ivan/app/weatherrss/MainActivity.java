@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -17,11 +18,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import design.ivan.app.weatherrss.MainScreen.ForecastAdapter;
 import design.ivan.app.weatherrss.MainScreen.IMainContract;
 import design.ivan.app.weatherrss.MainScreen.MainPresenter;
+import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.Repo.Injection;
 
-public class MainActivity extends AppCompatActivity implements IMainContract.MainView{
+public class MainActivity extends AppCompatActivity implements IMainContract.MainView, ForecastAdapter.ForecastAdapterOnClickHandler{
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
 
     Snackbar snackbar;
     IMainContract.ActionListener actionListener;
+    ForecastAdapter forecastAdapter;
     @BindView(R.id.layout_main_root)
     RelativeLayout root;
     @BindView(R.id.main_toolbar)
@@ -53,9 +57,9 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //recyclerView.setHasFixedSize(true);
-        //TODO add adapter to the recyclerView
-
+        recyclerView.setHasFixedSize(true);
+        forecastAdapter = new ForecastAdapter(this);
+        recyclerView.setAdapter(forecastAdapter);
         actionListener = new MainPresenter(Injection.loadForecastRepository(), this);
         showMessage(R.string.no_data);
         actionListener.getRSSFeed();
@@ -70,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
             recyclerView.scrollToPosition(scrollPosition);
         }
     }
+
+    //*** Main Presenter implementation ***//
 
     @Override
     public void showSnackbar(int resMessage) {
@@ -118,10 +124,28 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
         }
     }
 
+    @Override
+    public void loadData(SparseArray<Forecast> forecastSparseArray) {
+        if(forecastAdapter == null){
+            Log.d(TAG, "loadData: forecast adapter not found");
+            return;
+        }
+        hideMessage();
+        forecastAdapter.loadSparseArray(forecastSparseArray);
+
+    }
+
+    //+++ End MainPresenter implementation +++
+
     @OnClick(R.id.main_button_refresh)
     public void refreshClick(){
         Log.d(TAG, "refreshClick: ");
     }
 
 
+    //ForecastAdapterOnClickHandler implementation from ForecastAdapter
+    @Override
+    public void onClickItem(String date) {
+
+    }
 }

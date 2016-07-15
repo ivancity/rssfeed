@@ -1,6 +1,9 @@
 package design.ivan.app.weatherrss.MainScreen;
 
 import android.support.annotation.StringRes;
+import android.util.SparseArray;
+
+import design.ivan.app.weatherrss.Model.Forecast;
 
 /**
  * Created by ivanm on 7/12/16.
@@ -14,6 +17,7 @@ public interface IMainContract {
         void hideMessage();
         void showMessage(@StringRes int message);
         void enableUI(boolean activate);
+        void loadData(SparseArray<Forecast> forecastSparseArray);
     }
     interface ActionListener {
         void getRSSFeed();

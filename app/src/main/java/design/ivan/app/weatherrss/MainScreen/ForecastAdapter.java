@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import design.ivan.app.weatherrss.MainActivity;
 import design.ivan.app.weatherrss.Model.Forecast;
+import design.ivan.app.weatherrss.Model.ForecastDate;
 import design.ivan.app.weatherrss.R;
 
 /**
@@ -21,7 +23,7 @@ import design.ivan.app.weatherrss.R;
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>{
 
     public static interface ForecastAdapterOnClickHandler {
-        void onClick(String date);
+        void onClickItem(String date);
     }
 
     private static final int VIEWTYPE_CURRENT = 0;
@@ -31,9 +33,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     ForecastAdapterOnClickHandler clickHandler;
     private SparseArray<Forecast> forecastSparseArray;
 
-    public ForecastAdapter(Context context, ForecastAdapterOnClickHandler clickHandler){
-        this.context = context;
-        this.clickHandler = clickHandler;
+    public ForecastAdapter(MainActivity mainActivity){
+        this.context = mainActivity;
+        this.clickHandler = mainActivity;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                     break;
                 }
                 case VIEWTYPE_GENERIC: {
-                    layoutId = R.layout.main_list_item_generic;
+                    layoutId = R.layout.main_list_item;
                     break;
                 }
             }
@@ -66,7 +68,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     @Override
     public void onBindViewHolder(ForecastViewHolder holder, int position) {
         boolean isCurrentDay;
-        Forecast forecast = forecastSparseArray.valueAt(position);
+        ForecastDate night = forecastSparseArray.valueAt(position).getNight();
+        ForecastDate day = forecastSparseArray.valueAt(position).getDay();
+        String date = forecastSparseArray.valueAt(position).getDate();
         switch (getItemViewType(position)){
             case VIEWTYPE_CURRENT:
                 isCurrentDay = true;
@@ -76,13 +80,20 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         }
 
         if(isCurrentDay){
-            //TODO handle wind stuff
-
+            holder.windMinNight.setText(night.getWindMin());
+            holder.windMaxNight.setText(night.getWindMax());
+            holder.windMinDay.setText(day.getWindMin());
+            holder.windMaxDay.setText(day.getWindMax());
         }
 
-        //TODO handle temperature which both view types have
+        holder.tempMinNight.setText(night.getTempMin());
+        holder.tempMaxNight.setText(night.getTempMax());
+        holder.tempMinDay.setText(day.getTempMin());
+        holder.tempMaxDay.setText(day.getTempMax());
 
-
+        holder.dayTitle.setText(R.string.day);
+        holder.nightTitle.setText(R.string.night);
+        holder.dateTitle.setText(date);
     }
 
     @Override
@@ -109,6 +120,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         TextView windMaxDay, windMinDay;
         TextView tempMaxNight, tempMinNight;
         TextView windMaxNight, windMinNight;
+        TextView dayTitle, nightTitle;
 
         public ForecastViewHolder(View itemView) {
             super(itemView);
@@ -118,12 +130,14 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                 tempMinDay = ButterKnife.findById(itemDay, R.id.main_list_item_min_temp);
                 windMaxDay = ButterKnife.findById(itemDay, R.id.main_list_item_max_wind);
                 windMinDay = ButterKnife.findById(itemDay, R.id.main_list_item_min_wind);
+                dayTitle = ButterKnife.findById(itemDay, R.id.main_list_item_title);
             }
             if (itemNight != null) {
                 tempMaxNight = ButterKnife.findById(itemNight, R.id.main_list_item_max_temp);
                 tempMinNight = ButterKnife.findById(itemNight, R.id.main_list_item_min_temp);
                 windMaxNight = ButterKnife.findById(itemNight, R.id.main_list_item_max_wind);
                 windMinNight = ButterKnife.findById(itemNight, R.id.main_list_item_min_wind);
+                nightTitle = ButterKnife.findById(itemNight, R.id.main_list_item_title);
             }
 
 
