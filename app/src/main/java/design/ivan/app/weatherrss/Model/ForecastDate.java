@@ -22,6 +22,8 @@ public class ForecastDate {
     ArrayList<Wind> arrayWind;
     String windMin, windMax;
     String tempMinWord, tempMaxWord;
+    String tempMinFormatted, tempMaxFormatted;
+    String tempPhrase;
 
     public ForecastDate(){}
 
@@ -93,5 +95,29 @@ public class ForecastDate {
 
     public void setTempMaxWord(String tempMaxWord) {
         this.tempMaxWord = tempMaxWord;
+    }
+
+    public String getTempMinFormatted() {
+        return tempMinFormatted;
+    }
+
+    public void setTempMinFormatted(String tempMinFormatted) {
+        this.tempMinFormatted = tempMinFormatted;
+    }
+
+    public String getTempMaxFormatted() {
+        return tempMaxFormatted;
+    }
+
+    public void setTempMaxFormatted(String tempMaxFormatted) {
+        this.tempMaxFormatted = tempMaxFormatted;
+    }
+
+    public String getTempPhrase() {
+        return tempPhrase;
+    }
+
+    public void setTempPhrase(String tempPhrase) {
+        this.tempPhrase = tempPhrase;
     }
 }

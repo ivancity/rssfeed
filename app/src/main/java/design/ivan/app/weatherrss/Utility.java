@@ -1,5 +1,6 @@
 package design.ivan.app.weatherrss;
 
+import android.content.Context;
 import android.support.v4.util.ArrayMap;
 import android.util.SparseArray;
 
@@ -43,24 +44,55 @@ public class Utility {
         return forecastSparseArray;
     }
 
-    public static SparseArray<Forecast> prepareSparseArray(ArrayList<Forecast> forecastList){
-        Forecast selectedForecast;
+    public static SparseArray<Forecast> prepareSparseArray(Context context, ArrayList<Forecast> forecastList){
+        Forecast currentForecast;
         ForecastDate day, night;
         SparseArray<Forecast> sparseArray = new SparseArray<>();
         for (int i = 0; i < forecastList.size(); i++) {
-            selectedForecast = forecastList.get(i);
-            day = selectedForecast.getDay();
-            night = selectedForecast.getNight();
-            checkTextEncoding(selectedForecast);
-            initWindReadings(day);
-            initWindReadings(night);
+            currentForecast = forecastList.get(i);
+            day = currentForecast.getDay();
+            night = currentForecast.getNight();
+            initTempFormat(context, day);
+            initTempFormat(context, night);
+            checkTextEncoding(currentForecast);
+            initWindReadings(context, day);
+            initWindReadings(context, night);
             day.setTempMaxWord(numberToWord(Integer.valueOf(day.getTempMax())));
             day.setTempMinWord(numberToWord(Integer.valueOf(day.getTempMin())));
             night.setTempMaxWord(numberToWord(Integer.valueOf(night.getTempMax())));
             night.setTempMinWord(numberToWord(Integer.valueOf(night.getTempMin())));
-            sparseArray.put(i, selectedForecast);
+            initTempPhrase(context, day);
+            initTempPhrase(context, night);
+            sparseArray.put(i, currentForecast);
         }
         return sparseArray;
+    }
+
+    public static void initTempPhrase(Context context, ForecastDate forecastDate){
+        int formatTempWords = R.string.format_temperature_words;
+        forecastDate.setTempPhrase(
+                context.getString(
+                        formatTempWords,
+                        forecastDate.getTempMaxWord(),
+                        forecastDate.getTempMinWord()
+                )
+        );
+    }
+
+    public static void initTempFormat(Context context, ForecastDate forecastDate){
+        int formatTemperature = R.string.format_temperature;
+        forecastDate.setTempMaxFormatted(
+                context.getString(
+                        formatTemperature,
+                        forecastDate.getTempMax()
+                )
+        );
+        forecastDate.setTempMinFormatted(
+                context.getString(
+                        formatTemperature,
+                        forecastDate.getTempMin()
+                )
+        );
     }
 
     public static String numberToWord(final int n){
@@ -86,8 +118,9 @@ public class Utility {
         }
     }
 
-    public static void initWindReadings(ForecastDate forecastDate){
+    public static void initWindReadings(Context context, ForecastDate forecastDate){
         int speedMax, speedMin, temp;
+        int formatWind = R.string.format_wind;
         ArrayList<Wind>windList = forecastDate.getArrayWind();
         if(windList == null)
             return;
@@ -103,9 +136,15 @@ public class Utility {
             if(temp < speedMin)
                 speedMin = temp;
         }
-        forecastDate.setWindMax(String.valueOf(speedMax));
-        forecastDate.setWindMin(String.valueOf(speedMin));
+        forecastDate.setWindMax(String.valueOf(
+                context.getString(
+                        formatWind,
+                        speedMax)
+        ));
+        forecastDate.setWindMin(String.valueOf(
+                context.getString(
+                        formatWind,
+                        speedMin))
+        );
     }
-
-
 }
