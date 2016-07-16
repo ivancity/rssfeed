@@ -1,9 +1,6 @@
 package design.ivan.app.weatherrss;
 
-import android.content.IntentFilter;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,9 +23,10 @@ import design.ivan.app.weatherrss.MainScreen.IMainContract;
 import design.ivan.app.weatherrss.MainScreen.MainPresenter;
 import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.Repo.Injection;
-import design.ivan.app.weatherrss.network.NetworkChangeReceiver;
 
-public class MainActivity extends AppCompatActivity implements IMainContract.MainView, ForecastAdapter.ForecastAdapterOnClickHandler{
+public class MainActivity extends AppCompatActivity implements IMainContract.MainView,
+        ForecastAdapter.ForecastAdapterOnClickHandler
+{
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     private static final String TAG = "MainActivity";
     private int scrollPosition;
 
-    NetworkChangeReceiver networkChangeReceiver;
+
     Snackbar snackbar;
     IMainContract.ActionListener actionListener;
     ForecastAdapter forecastAdapter;
@@ -59,8 +57,6 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         forecastAdapter = new ForecastAdapter(this);
@@ -80,33 +76,20 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
                     .findFirstCompletelyVisibleItemPosition();
             recyclerView.scrollToPosition(scrollPosition);
         }
-
-        //start listening for network changes
-        if(networkChangeReceiver != null){
-            networkChangeReceiver = new NetworkChangeReceiver();
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            filter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
-            this.registerReceiver(networkChangeReceiver, filter);
-        }
+        actionListener.setupListeners(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause: ");
-
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: ");
-        //stop listening for network changes
-        if(networkChangeReceiver != null){
-            this.unregisterReceiver(networkChangeReceiver);
-            networkChangeReceiver = null;
-        }
+        actionListener.clearListeners(this);
     }
 
     //*** Main Presenter implementation ***//

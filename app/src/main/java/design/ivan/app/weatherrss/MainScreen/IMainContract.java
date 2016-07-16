@@ -1,5 +1,6 @@
 package design.ivan.app.weatherrss.MainScreen;
 
+import android.app.Activity;
 import android.support.annotation.StringRes;
 import android.util.SparseArray;
 
@@ -24,5 +25,7 @@ public interface IMainContract {
         void loadFeed();
         void initConnection();
         void doWebRequest();
+        void setupListeners(Activity main);
+        void clearListeners(Activity main);
     }
 }
