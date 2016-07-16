@@ -68,6 +68,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     @Override
     public void onBindViewHolder(ForecastViewHolder holder, int position) {
         boolean isCurrentDay;
+        int formatTemperature = R.string.format_temperature;
+        int formatWind = R.string.format_wind;
         ForecastDate night = forecastSparseArray.valueAt(position).getNight();
         ForecastDate day = forecastSparseArray.valueAt(position).getDay();
         String date = forecastSparseArray.valueAt(position).getDate();
@@ -80,19 +82,52 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         }
 
         if(isCurrentDay){
-            holder.windMinNight.setText(night.getWindMin());
-            holder.windMaxNight.setText(night.getWindMax());
+            holder.windMinNight.setText(context.getString(
+                    formatWind,
+                    night.getWindMin())
+            );
+            holder.windMaxNight.setText(context.getString(
+                    formatWind,
+                    night.getWindMax())
+            );
             holder.nightWeatherDesc.setText(night.getDescription());
-            holder.windMinDay.setText(day.getWindMin());
-            holder.windMaxDay.setText(day.getWindMax());
+            holder.windMinDay.setText(context.getString(
+                    formatWind,
+                    day.getWindMin())
+            );
+            holder.windMaxDay.setText(context.getString(
+                    formatWind,
+                    day.getWindMax())
+            );
             holder.dayWeatherDesc.setText(day.getDescription());
+            int formatId = R.string.format_temperature_words;
+            holder.dayTempText.setText(context.getString(
+                    formatId,
+                    day.getTempMaxWord(),
+                    day.getTempMinWord())
+            );
+            holder.nightTempText.setText(context.getString(
+                    formatId,
+                    night.getTempMaxWord(),
+                    night.getTempMinWord())
+            );
         }
-
-        holder.tempMinNight.setText(night.getTempMin());
-        holder.tempMaxNight.setText(night.getTempMax());
-        holder.tempMinDay.setText(day.getTempMin());
-        holder.tempMaxDay.setText(day.getTempMax());
-
+        holder.tempMinNight.setText(context.getString(
+                formatTemperature,
+                night.getTempMin())
+        );
+        holder.tempMaxNight.setText(context.getString(
+                formatTemperature,
+                night.getTempMax())
+        );
+        holder.tempMinDay.setText(context.getString(
+                formatTemperature,
+                day.getTempMin())
+        );
+        holder.tempMaxDay.setText(context.getString(
+                formatTemperature,
+                day.getTempMax())
+        );
         holder.dayTitle.setText(R.string.day);
         holder.nightTitle.setText(R.string.night);
         holder.dateTitle.setText(date);
@@ -123,7 +158,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         TextView tempMaxNight, tempMinNight;
         TextView windMaxNight, windMinNight;
         TextView dayTitle, nightTitle;
-        TextView tempText;
+        TextView dayTempText, nightTempText;
         TextView dayWeatherDesc, nightWeatherDesc;
 
         public ForecastViewHolder(View itemView) {
@@ -135,7 +170,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                 windMaxDay = ButterKnife.findById(itemDay, R.id.main_list_item_max_wind);
                 windMinDay = ButterKnife.findById(itemDay, R.id.main_list_item_min_wind);
                 dayTitle = ButterKnife.findById(itemDay, R.id.main_list_item_title);
-                tempText = ButterKnife.findById(itemDay, R.id.main_list_item_temp_text);
+                dayTempText = ButterKnife.findById(itemDay, R.id.main_list_item_temp_text);
                 dayWeatherDesc = ButterKnife.findById(itemDay, R.id.main_list_item_weather_description);
             }
             if (itemNight != null) {
@@ -144,7 +179,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                 windMaxNight = ButterKnife.findById(itemNight, R.id.main_list_item_max_wind);
                 windMinNight = ButterKnife.findById(itemNight, R.id.main_list_item_min_wind);
                 nightTitle = ButterKnife.findById(itemNight, R.id.main_list_item_title);
-                tempText = ButterKnife.findById(itemNight, R.id.main_list_item_temp_text);
+                nightTempText = ButterKnife.findById(itemNight, R.id.main_list_item_temp_text);
                 nightWeatherDesc = ButterKnife.findById(itemNight, R.id.main_list_item_weather_description);
             }
 

@@ -45,15 +45,19 @@ public class Utility {
 
     public static SparseArray<Forecast> prepareSparseArray(ArrayList<Forecast> forecastList){
         Forecast selectedForecast;
+        ForecastDate day, night;
         SparseArray<Forecast> sparseArray = new SparseArray<>();
         for (int i = 0; i < forecastList.size(); i++) {
             selectedForecast = forecastList.get(i);
+            day = selectedForecast.getDay();
+            night = selectedForecast.getNight();
             checkTextEncoding(selectedForecast);
-            initWindReadings(selectedForecast.getDay());
-            initWindReadings(selectedForecast.getNight());
-            selectedForecast.getDay().setTempMaxWord(numberToWord(Integer.valueOf(selectedForecast.getDay().getTempMax())));
-
-            selectedForecast.getNight().setTempMinWord(numberToWord(Integer.valueOf(selectedForecast.getNight().getTempMin())));
+            initWindReadings(day);
+            initWindReadings(night);
+            day.setTempMaxWord(numberToWord(Integer.valueOf(day.getTempMax())));
+            day.setTempMinWord(numberToWord(Integer.valueOf(day.getTempMin())));
+            night.setTempMaxWord(numberToWord(Integer.valueOf(night.getTempMax())));
+            night.setTempMinWord(numberToWord(Integer.valueOf(night.getTempMin())));
             sparseArray.put(i, selectedForecast);
         }
         return sparseArray;
