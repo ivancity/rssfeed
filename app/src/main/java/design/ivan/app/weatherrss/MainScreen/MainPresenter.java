@@ -24,9 +24,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
-/**
- * Created by ivanm on 7/12/16.
- */
 public class MainPresenter implements IMainContract.ActionListener,
         Callback<Forecasts>,
         NetworkChangeReceiver.NetworkChangeListener {
@@ -48,8 +45,12 @@ public class MainPresenter implements IMainContract.ActionListener,
 
     @Override
     public void getRSSFeed() {
-        initConnection();
-        doWebRequest();
+        if(Utility.isAppOnline((MainActivity)mainView)){
+            initConnection();
+            doWebRequest();
+        } else {
+            mainView.showSnackbar(R.string.offline, true);
+        }
     }
 
     @Override
@@ -65,6 +66,9 @@ public class MainPresenter implements IMainContract.ActionListener,
 
     @Override
     public void initConnection() {
+        if(retrofit != null)
+            return;
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(SimpleXmlConverterFactory.create())
@@ -139,7 +143,6 @@ public class MainPresenter implements IMainContract.ActionListener,
         });
     }
 
-
     //++ End Retrofit 2 callback implementation ++//
 
     //NetworkChangeListener implementation
@@ -147,8 +150,9 @@ public class MainPresenter implements IMainContract.ActionListener,
     public void onNetworkChange(boolean connected) {
         if(connected) {
             mainView.showSnackbar(R.string.online);
+            getRSSFeed();
         } else {
-            mainView.showSnackbar(R.string.offline);
+            mainView.showSnackbar(R.string.offline, true);
         }
     }
 }

@@ -8,4 +8,6 @@
     <dimen name="list_item_first_low">40dp</dimen>
     <dimen name="list_item_text_high">40sp</dimen>
     <dimen name="list_item_text_low">20sp</dimen>
+    <dimen name="list_padding_sides">10dp</dimen>
+    <dimen name="list_card_pading">5dp</dimen>
 </resources>

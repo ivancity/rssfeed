@@ -20,7 +20,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "onReceive: here ");
+        Log.d(TAG, "onReceive: here listener = " + listener);
         if(listener == null)
             return;
         listener.onNetworkChange(Utility.isAppOnline(context));

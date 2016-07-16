@@ -152,6 +152,14 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
 
     }
 
+    @Override
+    public int adapterItemCount() {
+        if(forecastAdapter != null){
+            return forecastAdapter.getItemCount();
+        }
+        return 0;
+    }
+
     //+++ End MainPresenter implementation +++
 
     @OnClick(R.id.main_button_refresh)

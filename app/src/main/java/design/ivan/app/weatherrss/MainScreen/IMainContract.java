@@ -19,6 +19,7 @@ public interface IMainContract {
         void showMessage(@StringRes int message);
         void enableUI(boolean activate);
         void loadData(SparseArray<Forecast> forecastSparseArray);
+        int adapterItemCount();
     }
     interface ActionListener {
         void getRSSFeed();

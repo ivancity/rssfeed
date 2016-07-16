@@ -38,7 +38,7 @@ public class Utility {
     public static SparseArray<Forecast> arrayMapToSparseArray(ArrayMap<String, Forecast> forecastData){
         SparseArray<Forecast> forecastSparseArray = new SparseArray<>();
         Forecast forecast;
-        //faster for loop iteration due to use of ArrayMap
+        //faster for loop iteration if we stick to regular for loop
         for (int i = 0; i < forecastData.size(); i++) {
             forecast = forecastData.valueAt(i);
             forecastSparseArray.append(i, forecast);
@@ -158,8 +158,5 @@ public class Utility {
         //send if it is connected or not
         return  activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
-
-
     }
-
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_list_item"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -12,14 +14,31 @@
         android:gravity="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         tools:text="12-7-2016"/>
-    <include
-        android:id="@+id/item_day"
-        layout="@layout/main_list_item_generic"
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <include
-        android:id="@+id/item_night"
-        layout="@layout/main_list_item_generic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        card_view:cardBackgroundColor="@color/light_gray"
+        card_view:contentPaddingRight="@dimen/list_card_pading"
+        card_view:contentPaddingLeft="@dimen/list_card_pading"
+        card_view:cardCornerRadius="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include
+                android:id="@+id/item_day"
+                layout="@layout/main_list_item_generic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <include
+                android:id="@+id/item_night"
+                layout="@layout/main_list_item_generic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
 </LinearLayout>
