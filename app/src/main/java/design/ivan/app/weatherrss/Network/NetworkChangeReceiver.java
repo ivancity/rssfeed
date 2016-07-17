@@ -7,9 +7,6 @@ import android.util.Log;
 
 import design.ivan.app.weatherrss.Utility;
 
-/**
- * Created by ivanm on 7/16/16.
- */
 public class NetworkChangeReceiver extends BroadcastReceiver {
     public interface NetworkChangeListener {
         void onNetworkChange(boolean connected);

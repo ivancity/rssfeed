@@ -12,6 +12,8 @@ public class Forecast {
     ForecastDate day;
     @Element(name = "night")
     ForecastDate night;
+    String formattedDate;
+
     public Forecast(){}
 
     public String getDate() {
@@ -36,5 +38,13 @@ public class Forecast {
 
     public void setNight(ForecastDate night) {
         this.night = night;
+    }
+
+    public String getFormattedDate() {
+        return formattedDate;
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
     }
 }

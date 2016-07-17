@@ -57,7 +57,7 @@ public class Utility {
         SparseArray<Forecast> sparseArray = new SparseArray<>();
         for (int i = 0; i < forecastList.size(); i++) {
             currentForecast = forecastList.get(i);
-            formatDate(currentForecast);
+            formatDate(context, currentForecast, i);
             day = currentForecast.getDay();
             night = currentForecast.getNight();
             initTempFormat(context, day);
@@ -76,41 +76,41 @@ public class Utility {
         return sparseArray;
     }
 
-    public static void formatDate(Forecast forecast){
+    public static void formatDate(Context context, Forecast forecast, int index){
         String date = forecast.getDate();
+        String dateFormatted = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd", Locale.US);
-        Calendar cal = Calendar.getInstance();
+        Calendar forecastCal = Calendar.getInstance();
         Calendar todayCal = Calendar.getInstance(Locale.US);
         try {
-            cal.setTime(sdf.parse(date));
+            forecastCal.setTime(sdf.parse(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int year       = cal.get(Calendar.YEAR);
-        int month      = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        Log.d(TAG, "formatDate: cal = " + cal.toString());
+        int year = forecastCal.get(Calendar.YEAR);
+        int day = forecastCal.get(Calendar.DAY_OF_MONTH);
+        String monthName = new SimpleDateFormat("MMM", Locale.US).format(forecastCal.getTime());
+        Log.d(TAG, "formatDate: simple = " + monthName);
 
-        String simple = new SimpleDateFormat("MMM", Locale.US).format(cal.getTime());
-        Log.d(TAG, "formatDate: simple = " + simple);
-
-        int calDay = cal.get(Calendar.DAY_OF_YEAR);
-        int todayDay = todayCal.get(Calendar.DAY_OF_YEAR);
-        if(calDay == todayDay){
-            Log.d(TAG, "formatDate: TODAY");
-        }else if(todayDay < calDay){
-            Log.d(TAG, "formatDate: TOMORROW");
+        if(index == 0){
+            int calDay = forecastCal.get(Calendar.DAY_OF_YEAR);
+            int todayDay = todayCal.get(Calendar.DAY_OF_YEAR);
+            if(calDay == todayDay){
+                dateFormatted = context.getString(R.string.format_today, monthName, day);
+            }else if(todayDay < calDay){
+                dateFormatted = context.getString(R.string.format_tomorrow, monthName, day);
+            }
+            Log.d(TAG, "formatDate: index 0 " + dateFormatted);
+            forecast.setFormattedDate(dateFormatted);
+            return;
         }
 
-/*        int comparisonResult = cal.compareTo(todayCal);
-        if(comparisonResult == 0){
-            Log.d(TAG, "formatDate: TODAY");
-        } else if(comparisonResult < 0){
-            Log.d(TAG, "formatDate: TOMORROW");
-        } else if(comparisonResult > 0){
-            Log.d(TAG, "formatDate: YESTERDAY");
-        }*/
-        Log.d(TAG, "test");
+        dateFormatted = context.getString(R.string.format_date, monthName, day, year);
+        forecast.setFormattedDate(dateFormatted);
+
+        Log.d(TAG, "formatDate: dateformatted = " + dateFormatted);
+
+        //Log.d(TAG, "test");
 
 
     }
