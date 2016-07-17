@@ -4,10 +4,15 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.util.ArrayMap;
+import android.util.Log;
 import android.util.SparseArray;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.Model.ForecastDate;
@@ -52,6 +57,7 @@ public class Utility {
         SparseArray<Forecast> sparseArray = new SparseArray<>();
         for (int i = 0; i < forecastList.size(); i++) {
             currentForecast = forecastList.get(i);
+            formatDate(currentForecast);
             day = currentForecast.getDay();
             night = currentForecast.getNight();
             initTempFormat(context, day);
@@ -68,6 +74,45 @@ public class Utility {
             sparseArray.put(i, currentForecast);
         }
         return sparseArray;
+    }
+
+    public static void formatDate(Forecast forecast){
+        String date = forecast.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd", Locale.US);
+        Calendar cal = Calendar.getInstance();
+        Calendar todayCal = Calendar.getInstance(Locale.US);
+        try {
+            cal.setTime(sdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int year       = cal.get(Calendar.YEAR);
+        int month      = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        Log.d(TAG, "formatDate: cal = " + cal.toString());
+
+        String simple = new SimpleDateFormat("MMM", Locale.US).format(cal.getTime());
+        Log.d(TAG, "formatDate: simple = " + simple);
+
+        int calDay = cal.get(Calendar.DAY_OF_YEAR);
+        int todayDay = todayCal.get(Calendar.DAY_OF_YEAR);
+        if(calDay == todayDay){
+            Log.d(TAG, "formatDate: TODAY");
+        }else if(todayDay < calDay){
+            Log.d(TAG, "formatDate: TOMORROW");
+        }
+
+/*        int comparisonResult = cal.compareTo(todayCal);
+        if(comparisonResult == 0){
+            Log.d(TAG, "formatDate: TODAY");
+        } else if(comparisonResult < 0){
+            Log.d(TAG, "formatDate: TOMORROW");
+        } else if(comparisonResult > 0){
+            Log.d(TAG, "formatDate: YESTERDAY");
+        }*/
+        Log.d(TAG, "test");
+
+
     }
 
     public static void initTempPhrase(Context context, ForecastDate forecastDate){
@@ -155,7 +200,7 @@ public class Utility {
         ConnectivityManager cm =
                 (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        //send if it is connected or not
+        //send boolean if it is connected or not
         return  activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
     }
