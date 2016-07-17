@@ -70,7 +70,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         boolean isCurrentDay;
         ForecastDate night = forecastSparseArray.valueAt(position).getNight();
         ForecastDate day = forecastSparseArray.valueAt(position).getDay();
-        String date = forecastSparseArray.valueAt(position).getFormattedDate();
         switch (getItemViewType(position)){
             case VIEWTYPE_CURRENT:
                 isCurrentDay = true;
@@ -95,7 +94,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         holder.tempMaxDay.setText(day.getTempMaxFormatted());
         holder.dayTitle.setText(R.string.day);
         holder.nightTitle.setText(R.string.night);
-        holder.dateTitle.setText(date);
+        holder.dateTitle.setText(forecastSparseArray.valueAt(position).getFormattedDate());
     }
 
     @Override

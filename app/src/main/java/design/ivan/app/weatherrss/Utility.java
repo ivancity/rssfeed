@@ -77,28 +77,28 @@ public class Utility {
     }
 
     public static void formatDate(Context context, Forecast forecast, int index){
-        String date = forecast.getDate();
         String dateFormatted = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd", Locale.US);
         Calendar forecastCal = Calendar.getInstance();
         Calendar todayCal = Calendar.getInstance(Locale.US);
         try {
-            forecastCal.setTime(sdf.parse(date));
+            forecastCal.setTime(sdf.parse(forecast.getDate()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        //get year, day, month
         int year = forecastCal.get(Calendar.YEAR);
         int day = forecastCal.get(Calendar.DAY_OF_MONTH);
         String monthName = new SimpleDateFormat("MMM", Locale.US).format(forecastCal.getTime());
-        Log.d(TAG, "formatDate: simple = " + monthName);
-
         if(index == 0){
             int calDay = forecastCal.get(Calendar.DAY_OF_YEAR);
             int todayDay = todayCal.get(Calendar.DAY_OF_YEAR);
             if(calDay == todayDay){
                 dateFormatted = context.getString(R.string.format_today, monthName, day);
-            }else if(todayDay < calDay){
+            }else if(todayDay < calDay && (todayDay + 2 == calDay + 1)){
                 dateFormatted = context.getString(R.string.format_tomorrow, monthName, day);
+            } else{
+                dateFormatted = context.getString(R.string.format_date, monthName, day, year);
             }
             Log.d(TAG, "formatDate: index 0 " + dateFormatted);
             forecast.setFormattedDate(dateFormatted);

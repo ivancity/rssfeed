@@ -65,4 +65,11 @@ public class InMemoryForecastRepo implements IForecastRepository {
     public void refreshData() {
         cachedForecast = null;
     }
+
+    @Override
+    public int arrayItemCount() {
+        if(cachedForecast == null)
+            return 0;
+        return cachedForecast.size();
+    }
 }

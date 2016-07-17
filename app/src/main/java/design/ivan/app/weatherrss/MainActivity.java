@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
         recyclerView.setAdapter(forecastAdapter);
         actionListener = new MainPresenter(Injection.loadForecastRepository(), this);
         showMessage(R.string.no_data);
-        actionListener.getRSSFeed();
+        actionListener.getRSSFeed(false);
     }
 
     @Override
@@ -165,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     @OnClick(R.id.main_button_refresh)
     public void refreshClick(){
         Log.d(TAG, "refreshClick: ");
+        actionListener.getRSSFeed(true);
     }
 
 

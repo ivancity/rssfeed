@@ -44,7 +44,14 @@ public class MainPresenter implements IMainContract.ActionListener,
     //** ActionListener implementation **//
 
     @Override
-    public void getRSSFeed() {
+    public void getRSSFeed(boolean forced) {
+        if(!forced){
+            if(forecastRepository.arrayItemCount() > 0){
+                loadFeed();
+                return;
+            }
+        }
+
         if(Utility.isAppOnline((MainActivity)mainView)){
             initConnection();
             doWebRequest();
@@ -150,7 +157,7 @@ public class MainPresenter implements IMainContract.ActionListener,
     public void onNetworkChange(boolean connected) {
         if(connected) {
             mainView.showSnackbar(R.string.online);
-            getRSSFeed();
+            getRSSFeed(false);
         } else {
             mainView.showSnackbar(R.string.offline, true);
         }

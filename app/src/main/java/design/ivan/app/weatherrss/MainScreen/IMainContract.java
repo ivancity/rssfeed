@@ -22,7 +22,7 @@ public interface IMainContract {
         int adapterItemCount();
     }
     interface ActionListener {
-        void getRSSFeed();
+        void getRSSFeed(boolean forced);
         void loadFeed();
         void initConnection();
         void doWebRequest();

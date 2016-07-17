@@ -29,4 +29,5 @@ public interface IForecastRepository {
     void saveForecast(@NonNull Forecast forecast);
     void saveArrayForecast(@NonNull SparseArray<Forecast> forecastSparseArray, @NonNull SaveForecastArrayCallback callback);
     void refreshData();
+    int arrayItemCount();
 }
