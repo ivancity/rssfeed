@@ -15,15 +15,6 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways">
-        <ImageButton
-            android:id="@+id/main_button_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:padding="5dp"
-            android:contentDescription="refresh button"
-            android:background="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_autorenew_white_24px"/>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <RelativeLayout
@@ -50,4 +41,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             tools:text="Nothing to show"/>
     </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/main_button_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="10dp"
+        app:srcCompat="@drawable/ic_autorenew_white_24px"
+        app:borderWidth="0dp"
+        app:layout_behavior="design.ivan.app.weatherrss.ui.RefreshFabBehavior"/>
 </android.support.design.widget.CoordinatorLayout>
