@@ -2,6 +2,7 @@ package design.ivan.app.weatherrss;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import design.ivan.app.weatherrss.MainScreen.BottomSheetAdapter;
 import design.ivan.app.weatherrss.MainScreen.ForecastAdapter;
 import design.ivan.app.weatherrss.MainScreen.IMainContract;
 import design.ivan.app.weatherrss.MainScreen.MainPresenter;
@@ -35,9 +38,11 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     private int scrollPosition;
 
 
-    Snackbar snackbar;
+    private Snackbar snackbar;
     IMainContract.ActionListener actionListener;
-    ForecastAdapter forecastAdapter;
+    private ForecastAdapter forecastAdapter;
+    private BottomSheetAdapter bottomAdapter;
+    private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     @BindView(R.id.layout_main_root)
     RelativeLayout root;
     @BindView(R.id.main_toolbar)
@@ -48,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     RecyclerView recyclerView;
     @BindView(R.id.main_text_message)
     TextView txtMessage;
+    @BindView(R.id.bottom_recycler)
+    RecyclerView bottomRecycler;
+    @BindView(R.id.bottom_sheet_title)
+    TextView txtBottomSheetTitle;
+    @BindView(R.id.frame_bottom_sheet)
+    FrameLayout frameBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +67,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
         Log.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        forecastAdapter = new ForecastAdapter(this);
-        recyclerView.setAdapter(forecastAdapter);
+        initUi();
         actionListener = new MainPresenter(Injection.loadForecastRepository(), this);
         showMessage(R.string.no_data);
         actionListener.getRSSFeed(false);
@@ -78,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
             recyclerView.scrollToPosition(scrollPosition);
         }
         actionListener.setupListeners(this);
+        if(mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+            hideBottomSheet();
     }
 
     @Override
@@ -94,6 +102,27 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     }
 
     //*** Main Presenter implementation ***//
+
+    @Override
+    public void initUi() {
+        //toolbar
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        //main recycler view
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        forecastAdapter = new ForecastAdapter(this);
+        recyclerView.setAdapter(forecastAdapter);
+
+        //bottom sheet recycler view
+        bottomRecycler.setLayoutManager(new LinearLayoutManager(this));
+        bottomRecycler.setHasFixedSize(true);
+        bottomAdapter = new BottomSheetAdapter();
+        bottomRecycler.setAdapter(bottomAdapter);
+
+        mBottomSheetBehavior = BottomSheetBehavior.from(frameBottomSheet);
+    }
 
     @Override
     public void showSnackbar(int resMessage) {
@@ -161,11 +190,26 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
         return 0;
     }
 
+    @Override
+    public void showBottomSheet(Forecast forecast) {
+        if(forecast == null){
+            Log.d(TAG, "showBottomSheet: Bottom sheet not loaded null forecast object");
+            return;
+        }
+        txtBottomSheetTitle.setText(forecast.getFormattedDate());
+        bottomAdapter.loadDataSet(forecast.getAdapterReadyList());
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    @Override
+    public void hideBottomSheet() {
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
     //+++ End MainPresenter implementation +++
 
     @OnClick(R.id.main_button_refresh)
     public void refreshClick(){
-        Log.d(TAG, "refreshClick: ");
         actionListener.getRSSFeed(true);
     }
 
@@ -173,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     //ForecastAdapterOnClickHandler implementation from ForecastAdapter
     @Override
     public void onClickItem(String date) {
-
+        Log.d(TAG, "onClickItem: clicked on date" + date);
+        actionListener.showPlaces(date);
     }
 }

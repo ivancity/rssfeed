@@ -112,6 +112,16 @@ public class MainPresenter implements IMainContract.ActionListener,
         }
     }
 
+    @Override
+    public void showPlaces(String id) {
+        forecastRepository.getForecast(id, new IForecastRepository.GetForecastCallback() {
+            @Override
+            public void onForecastLoaded(Forecast forecast) {
+                mainView.showBottomSheet(forecast);
+            }
+        });
+    }
+
     //++ End ActionListener implementation ++//
 
     //** Retrofit 2 callback implementation **//

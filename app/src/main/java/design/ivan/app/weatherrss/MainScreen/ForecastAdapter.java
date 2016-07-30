@@ -1,6 +1,5 @@
 package design.ivan.app.weatherrss.MainScreen;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
@@ -29,12 +28,12 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     private static final int VIEWTYPE_CURRENT = 0;
     private static final int VIEWTYPE_GENERIC = 1;
 
-    Context context;
+    //Context context;
     ForecastAdapterOnClickHandler clickHandler;
     private SparseArray<Forecast> forecastSparseArray;
 
     public ForecastAdapter(MainActivity mainActivity){
-        this.context = mainActivity;
+        //this.context = mainActivity;
         this.clickHandler = mainActivity;
     }
 
@@ -66,7 +65,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     }
 
     @Override
-    public void onBindViewHolder(ForecastViewHolder holder, int position) {
+    public void onBindViewHolder(final ForecastViewHolder holder, int position) {
         boolean isCurrentDay;
         ForecastDate night = forecastSparseArray.valueAt(position).getNight();
         ForecastDate day = forecastSparseArray.valueAt(position).getDay();
@@ -87,6 +86,17 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
             holder.dayWeatherDesc.setText(day.getDescription());
             holder.dayTempText.setText(day.getTempPhrase());
             holder.nightTempText.setText(night.getTempPhrase());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = holder.getAdapterPosition();
+                    if(RecyclerView.NO_POSITION != position){
+                        Forecast forecast = forecastSparseArray.valueAt(position);
+                        clickHandler.onClickItem(forecast.getDate());
+                    }
+
+                }
+            });
         }
         holder.tempMinNight.setText(night.getTempMinFormatted());
         holder.tempMaxNight.setText(night.getTempMaxFormatted());
@@ -109,7 +119,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         //TODO consider modifying UI if sparse array is empty at this point.
     }
 
-    public class ForecastViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ForecastViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @Nullable @BindView(R.id.item_date_title)
         TextView dateTitle;

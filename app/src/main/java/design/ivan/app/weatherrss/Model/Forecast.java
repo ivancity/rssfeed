@@ -4,6 +4,8 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
+
 @Root(name = "forecast")
 public class Forecast {
     @Attribute(name = "date", required = false)
@@ -13,6 +15,7 @@ public class Forecast {
     @Element(name = "night")
     ForecastDate night;
     String formattedDate;
+    ArrayList<Place> adapterReadyList;
 
     public Forecast(){}
 
@@ -46,5 +49,13 @@ public class Forecast {
 
     public void setFormattedDate(String formattedDate) {
         this.formattedDate = formattedDate;
+    }
+
+    public ArrayList<Place> getAdapterReadyList() {
+        return adapterReadyList;
+    }
+
+    public void setAdapterReadyList(ArrayList<Place> adapterReadyList) {
+        this.adapterReadyList = adapterReadyList;
     }
 }

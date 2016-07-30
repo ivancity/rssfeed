@@ -11,6 +11,7 @@ import design.ivan.app.weatherrss.Model.Forecast;
  */
 public interface IMainContract {
     interface MainView {
+        void initUi();
         void showSnackbar(@StringRes int resMessage);
         void showSnackbar(@StringRes int resMessage, boolean alwaysOn);
         void hideSnackbar();
@@ -20,6 +21,8 @@ public interface IMainContract {
         void enableUI(boolean activate);
         void loadData(SparseArray<Forecast> forecastSparseArray);
         int adapterItemCount();
+        void showBottomSheet(Forecast forecast);
+        void hideBottomSheet();
     }
     interface ActionListener {
         void getRSSFeed(boolean forced);
@@ -28,5 +31,6 @@ public interface IMainContract {
         void doWebRequest();
         void setupListeners(Activity main);
         void clearListeners(Activity main);
+        void showPlaces(String id);
     }
 }

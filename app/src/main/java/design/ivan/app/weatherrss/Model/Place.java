@@ -13,6 +13,7 @@ public class Place {
     String tempMin;
     @Element(name = "tempmax", required = false)
     String tempMax;
+    String phenomenonExtra;
 
     public Place(){}
 
@@ -43,4 +44,12 @@ public class Place {
     public String getTempMax() { return tempMax; }
 
     public void setTempMax(String tempMax) { this.tempMax = tempMax; }
+
+    public String getPhenomenonExtra() {
+        return phenomenonExtra;
+    }
+
+    public void setPhenomenonExtra(String phenomenonExtra) {
+        this.phenomenonExtra = phenomenonExtra;
+    }
 }

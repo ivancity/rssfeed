@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.Model.ForecastDate;
+import design.ivan.app.weatherrss.Model.Place;
 import design.ivan.app.weatherrss.Model.Wind;
 
 
@@ -55,11 +56,14 @@ public class Utility {
         Forecast currentForecast;
         ForecastDate day, night;
         SparseArray<Forecast> sparseArray = new SparseArray<>();
-        for (int i = 0; i < forecastList.size(); i++) {
+        int limit = forecastList.size();
+        for (int i = 0; i < limit; i++) {
             currentForecast = forecastList.get(i);
             formatDate(context, currentForecast, i);
             day = currentForecast.getDay();
             night = currentForecast.getNight();
+            if(day.getArrayPlaces() != null && night.getArrayPlaces() != null)
+                currentForecast.setAdapterReadyList(prepareForAdapter(day,night));
             initTempFormat(context, day);
             initTempFormat(context, night);
             checkTextEncoding(currentForecast);
@@ -74,6 +78,31 @@ public class Utility {
             sparseArray.put(i, currentForecast);
         }
         return sparseArray;
+    }
+
+    public static ArrayList<Place> prepareForAdapter(ForecastDate day, ForecastDate night){
+        ArrayList<Place> dayPlaces = day.getArrayPlaces();
+        ArrayList<Place> nightPlaces = night.getArrayPlaces();
+        ArrayList<Place> mergedPlaces = new ArrayList<>(dayPlaces.size());
+        Place currentPlace;
+        Place newPlace;
+        int limit = dayPlaces.size();
+        for (int i = 0; i < limit; i++) {
+            newPlace = new Place();
+            //handle day Places
+            currentPlace = dayPlaces.get(i);
+            newPlace.setPhenomenon(currentPlace.getPhenomenon());
+            newPlace.setTempMax(currentPlace.getTempMax());
+            //handle night Places
+            currentPlace = nightPlaces.get(i);
+            newPlace.setPhenomenonExtra(currentPlace.getPhenomenon());
+            newPlace.setTempMin(currentPlace.getTempMin());
+            //add to merged array list
+            newPlace.setName(currentPlace.getName());
+            mergedPlaces.add(newPlace);
+        }
+        return mergedPlaces;
+
     }
 
     public static void formatDate(Context context, Forecast forecast, int index){

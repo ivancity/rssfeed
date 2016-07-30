@@ -50,4 +50,14 @@
         app:srcCompat="@drawable/ic_autorenew_white_24px"
         app:borderWidth="0dp"
         app:layout_behavior="design.ivan.app.weatherrss.ui.RefreshFabBehavior"/>
+    <FrameLayout
+        android:id="@+id/frame_bottom_sheet"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="true"
+        android:background="@color/cardview_dark_background"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+        <include layout="@layout/layout_bottom_sheet" />
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
