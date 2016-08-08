@@ -1,39 +1,35 @@
 package design.ivan.app.weatherrss.MainScreen;
 
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayout;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import design.ivan.app.weatherrss.MainActivity;
 import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.Model.ForecastDate;
 import design.ivan.app.weatherrss.R;
+import design.ivan.app.weatherrss.databinding.MainListItemBinding;
+import design.ivan.app.weatherrss.databinding.MainListItemFirstBinding;
 
 /**
  * Created by ivanm on 7/14/16.
  */
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>{
 
-    public static interface ForecastAdapterOnClickHandler {
+    public interface ForecastAdapterOnClickHandler {
         void onClickItem(String date);
     }
 
     private static final int VIEWTYPE_CURRENT = 0;
     private static final int VIEWTYPE_GENERIC = 1;
 
-    //Context context;
     ForecastAdapterOnClickHandler clickHandler;
     private SparseArray<Forecast> forecastSparseArray;
 
     public ForecastAdapter(MainActivity mainActivity){
-        //this.context = mainActivity;
         this.clickHandler = mainActivity;
     }
 
@@ -45,20 +41,15 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     @Override
     public ForecastViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         if ( viewGroup instanceof RecyclerView ) {
-            int layoutId = -1;
-            switch (viewType) {
-                case VIEWTYPE_CURRENT: {
-                    layoutId = R.layout.main_list_item_first;
-                    break;
-                }
-                case VIEWTYPE_GENERIC: {
-                    layoutId = R.layout.main_list_item;
-                    break;
-                }
+            LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+            if(viewType == VIEWTYPE_CURRENT){
+                MainListItemFirstBinding bindingFirst = DataBindingUtil
+                        .inflate(layoutInflater, R.layout.main_list_item_first, viewGroup, false);
+                return new ForecastViewHolder(bindingFirst);
             }
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false);
-            view.setFocusable(true);
-            return new ForecastViewHolder(view);
+            MainListItemBinding binding = DataBindingUtil
+                    .inflate(layoutInflater, R.layout.main_list_item, viewGroup, false);
+            return new ForecastViewHolder(binding);
         } else {
             throw new RuntimeException("Something is wrong with the RecyclerView");
         }
@@ -78,14 +69,15 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         }
 
         if(isCurrentDay){
-            holder.windMinNight.setText(night.getWindMin());
-            holder.windMaxNight.setText(night.getWindMax());
-            holder.windMinDay.setText(day.getWindMin());
-            holder.windMaxDay.setText(day.getWindMax());
-            holder.nightWeatherDesc.setText(night.getDescription());
-            holder.dayWeatherDesc.setText(day.getDescription());
-            holder.dayTempText.setText(day.getTempPhrase());
-            holder.nightTempText.setText(night.getTempPhrase());
+            holder.firstBinding.itemDateTitle.setText(forecastSparseArray.valueAt(position).getFormattedDate());
+            holder.firstBinding.itemNight.mainListItemMinWind.setText(night.getWindMin());
+            holder.firstBinding.itemNight.mainListItemMaxWind.setText(night.getWindMax());
+            holder.firstBinding.itemDay.mainListItemMinWind.setText(day.getWindMin());
+            holder.firstBinding.itemDay.mainListItemMaxWind.setText(day.getWindMax());
+            holder.firstBinding.itemNight.mainListItemWeatherDescription.setText(night.getDescription());
+            holder.firstBinding.itemDay.mainListItemWeatherDescription.setText(day.getDescription());
+            holder.firstBinding.itemDay.mainListItemTempText.setText(day.getTempPhrase());
+            holder.firstBinding.itemNight.mainListItemTempText.setText(night.getTempPhrase());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -97,14 +89,15 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
                 }
             });
+            return;
         }
-        holder.tempMinNight.setText(night.getTempMinFormatted());
-        holder.tempMaxNight.setText(night.getTempMaxFormatted());
-        holder.tempMinDay.setText(day.getTempMinFormatted());
-        holder.tempMaxDay.setText(day.getTempMaxFormatted());
-        holder.dayTitle.setText(R.string.day);
-        holder.nightTitle.setText(R.string.night);
-        holder.dateTitle.setText(forecastSparseArray.valueAt(position).getFormattedDate());
+        holder.binding.itemDateTitle.setText(forecastSparseArray.valueAt(position).getFormattedDate());
+        holder.binding.itemNight.mainListItemMinTemp.setText(night.getTempMinFormatted());
+        holder.binding.itemNight.mainListItemMaxTemp.setText(night.getTempMaxFormatted());
+        holder.binding.itemDay.mainListItemMinTemp.setText(day.getTempMinFormatted());
+        holder.binding.itemDay.mainListItemMaxTemp.setText(day.getTempMaxFormatted());
+        holder.binding.itemDay.mainListItemTitle.setText(R.string.day);
+        holder.binding.itemNight.mainListItemTitle.setText(R.string.night);
     }
 
     @Override
@@ -120,42 +113,23 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     }
 
     public static class ForecastViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        MainListItemFirstBinding firstBinding;
+        MainListItemBinding binding;
 
-        @Nullable @BindView(R.id.item_date_title)
-        TextView dateTitle;
-        @Nullable @BindView(R.id.item_day)
-        GridLayout itemDay;
-        @Nullable @BindView(R.id.item_night)
-        GridLayout itemNight;
-        TextView tempMaxDay, tempMinDay;
-        TextView windMaxDay, windMinDay;
-        TextView tempMaxNight, tempMinNight;
-        TextView windMaxNight, windMinNight;
-        TextView dayTitle, nightTitle;
-        TextView dayTempText, nightTempText;
-        TextView dayWeatherDesc, nightWeatherDesc;
+        //R.layout.main_list_item_first
+        public ForecastViewHolder(MainListItemFirstBinding binding){
+            this(binding.getRoot());
+            firstBinding = binding;
+        }
+
+        //R.layout.main_list_item
+        public ForecastViewHolder(MainListItemBinding binding){
+            this(binding.getRoot());
+            this.binding = binding;
+        }
 
         public ForecastViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
-            if(itemDay != null){
-                tempMaxDay = ButterKnife.findById(itemDay, R.id.main_list_item_max_temp);
-                tempMinDay = ButterKnife.findById(itemDay, R.id.main_list_item_min_temp);
-                windMaxDay = ButterKnife.findById(itemDay, R.id.main_list_item_max_wind);
-                windMinDay = ButterKnife.findById(itemDay, R.id.main_list_item_min_wind);
-                dayTitle = ButterKnife.findById(itemDay, R.id.main_list_item_title);
-                dayTempText = ButterKnife.findById(itemDay, R.id.main_list_item_temp_text);
-                dayWeatherDesc = ButterKnife.findById(itemDay, R.id.main_list_item_weather_description);
-            }
-            if (itemNight != null) {
-                tempMaxNight = ButterKnife.findById(itemNight, R.id.main_list_item_max_temp);
-                tempMinNight = ButterKnife.findById(itemNight, R.id.main_list_item_min_temp);
-                windMaxNight = ButterKnife.findById(itemNight, R.id.main_list_item_max_wind);
-                windMinNight = ButterKnife.findById(itemNight, R.id.main_list_item_min_wind);
-                nightTitle = ButterKnife.findById(itemNight, R.id.main_list_item_title);
-                nightTempText = ButterKnife.findById(itemNight, R.id.main_list_item_temp_text);
-                nightWeatherDesc = ButterKnife.findById(itemNight, R.id.main_list_item_weather_description);
-            }
         }
 
         @Override

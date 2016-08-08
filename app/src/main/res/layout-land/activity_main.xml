@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/main_toolbar"
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways">
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-    <RelativeLayout
-        android:id="@+id/layout_main_root"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="design.ivan.app.weatherrss.MainActivity">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/main_recycler_view"
-            android:layout_width="400dp"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways">
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+        <RelativeLayout
+            android:id="@+id/layout_main_root"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/list_padding_sides"
-            android:paddingStart="@dimen/list_padding_sides"
-            android:paddingRight="@dimen/list_padding_sides"
-            android:paddingEnd="@dimen/list_padding_sides"
-            android:paddingBottom="@dimen/list_padding_sides" />
-        <TextView
-            android:id="@+id/main_text_message"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context="design.ivan.app.weatherrss.MainActivity">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_recycler_view"
+                android:layout_width="400dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/list_padding_sides"
+                android:paddingStart="@dimen/list_padding_sides"
+                android:paddingRight="@dimen/list_padding_sides"
+                android:paddingEnd="@dimen/list_padding_sides"
+                android:paddingBottom="@dimen/list_padding_sides" />
+            <TextView
+                android:id="@+id/main_text_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                tools:text="Nothing to show"/>
+        </RelativeLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/main_button_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            tools:text="Nothing to show"/>
-    </RelativeLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/main_button_refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="10dp"
-        app:srcCompat="@drawable/ic_autorenew_white_24px"
-        app:borderWidth="0dp"
-        app:layout_behavior="design.ivan.app.weatherrss.ui.RefreshFabBehavior"/>
-    <FrameLayout
-        android:id="@+id/frame_bottom_sheet"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_centerInParent="true"
-        android:fitsSystemWindows="true"
-        android:clipToPadding="true"
-        android:background="@color/cardview_dark_background"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-        <include layout="@layout/layout_bottom_sheet" />
-    </FrameLayout>
-</android.support.design.widget.CoordinatorLayout>
+            android:layout_gravity="end|bottom"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_autorenew_white_24px"
+            app:borderWidth="0dp"
+            app:layout_behavior="design.ivan.app.weatherrss.ui.RefreshFabBehavior"/>
+        <FrameLayout
+            android:id="@+id/frame_bottom_sheet"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:clipToPadding="true"
+            android:background="@color/cardview_dark_background"
+            app:layout_behavior="@string/bottom_sheet_behavior">
+            <include layout="@layout/layout_bottom_sheet" />
+        </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

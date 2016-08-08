@@ -8,6 +8,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -185,7 +186,7 @@ public class Utility {
         String dayDesc = forecast.getDay().getDescription();
         String nightDesc = forecast.getNight().getDescription();
         try {
-            String nightUTF8 = new String(nightDesc.getBytes("ISO-8859-1"), "UTF-8");
+            String nightUTF8 = new String(nightDesc.getBytes(Charset.forName("ISO-8859-1")), Charset.forName("UTF-8"));
             forecast.getNight().setDescription(nightUTF8);
             String dayUTF8 = new String(dayDesc.getBytes("ISO-8859-1"), "UTF-8");
             forecast.getDay().setDescription(dayUTF8);

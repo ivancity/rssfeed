@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_list_item_first"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/item_date_title"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/layout_list_item_first"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        tools:text="12-7-2016"/>
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        card_view:cardBackgroundColor="@color/colorPrimaryDark"
-        card_view:contentPaddingRight="@dimen/list_card_pading"
-        card_view:contentPaddingLeft="@dimen/list_card_pading"
-        card_view:contentPaddingBottom="@dimen/list_card_pading"
-        card_view:cardCornerRadius="10dp">
-        <include
-            android:id="@+id/item_day"
-            layout="@layout/list_item_first_day"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/item_date_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        card_view:cardBackgroundColor="@color/gray"
-        card_view:contentPaddingRight="@dimen/list_card_pading"
-        card_view:contentPaddingLeft="@dimen/list_card_pading"
-        card_view:contentPaddingBottom="@dimen/list_card_pading"
-        card_view:cardCornerRadius="10dp">
-        <include
-            android:id="@+id/item_night"
-            layout="@layout/list_item_first_day"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="12-7-2016"/>
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.v7.widget.CardView>
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="true"
+            card_view:cardBackgroundColor="@color/colorPrimaryDark"
+            card_view:contentPaddingRight="@dimen/list_card_pading"
+            card_view:contentPaddingLeft="@dimen/list_card_pading"
+            card_view:contentPaddingBottom="@dimen/list_card_pading"
+            card_view:cardCornerRadius="10dp">
+            <include
+                android:id="@+id/item_day"
+                layout="@layout/list_item_first_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.CardView>
 
-</LinearLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="true"
+            card_view:cardBackgroundColor="@color/gray"
+            card_view:contentPaddingRight="@dimen/list_card_pading"
+            card_view:contentPaddingLeft="@dimen/list_card_pading"
+            card_view:contentPaddingBottom="@dimen/list_card_pading"
+            card_view:cardCornerRadius="10dp">
+            <include
+                android:id="@+id/item_night"
+                layout="@layout/list_item_first_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</layout>

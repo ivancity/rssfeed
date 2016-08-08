@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    tools:background="@color/cardview_dark_background">
-    <TextView
-        android:id="@+id/bottom_sheet_title"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:gravity="center"
-        tools:text="Today, Feb 2"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/bottom_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/list_padding_sides"
-        tools:listitem="@layout/bottom_list_item"/>
-</LinearLayout>
+        tools:background="@color/cardview_dark_background">
+        <TextView
+            android:id="@+id/bottom_sheet_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:gravity="center"
+            tools:text="Today, Feb 2"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/bottom_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/list_padding_sides"
+            tools:listitem="@layout/bottom_list_item"/>
+    </LinearLayout>
+</layout>

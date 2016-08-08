@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "design.ivan.app.weatherrss"
@@ -17,6 +16,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dataBinding{
+        enabled = true
     }
 }
 
@@ -41,7 +44,5 @@ dependencies {
         exclude module: 'stax'
         exclude module: 'xpp3'
     }
-    compile 'com.jakewharton:butterknife:8.2.1'
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 }
 
