@@ -2,6 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="date"
+            type="design.ivan.app.weatherrss.Model.ForecastDate"/>
+    </data>
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,6 +28,7 @@
             android:maxWidth="@dimen/list_item_first_high"
             android:gravity="center_horizontal"
             android:textSize="@dimen/list_item_text_high"
+            android:text="@{date.tempMaxFormatted}"
             app:layout_columnWeight="1"
             app:layout_gravity="fill_horizontal"
             tools:text="30ºC" />
@@ -31,6 +37,7 @@
             android:layout_width="0dp"
             android:gravity="center_horizontal"
             android:textSize="@dimen/list_item_text_high"
+            android:text="@{date.windMax}"
             app:layout_columnWeight="1"
             app:layout_gravity="fill_horizontal"
             tools:text="4kn"/>
@@ -42,6 +49,7 @@
             android:maxWidth="@dimen/list_item_first_low"
             android:gravity="center_horizontal"
             android:textSize="@dimen/list_item_text_low"
+            android:text="@{date.tempMinFormatted}"
             app:layout_columnWeight="1"
             app:layout_gravity="fill_horizontal"
             tools:text="10ºC"/>
@@ -50,6 +58,7 @@
             android:layout_width="0dp"
             android:gravity="center_horizontal"
             android:textSize="@dimen/list_item_text_low"
+            android:text="@{date.windMin}"
             app:layout_columnWeight="1"
             app:layout_gravity="fill_horizontal"
             tools:text="1kn"/>
@@ -61,6 +70,7 @@
         <TextView
             android:id="@+id/main_list_item_temp_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@{date.tempPhrase}"
             app:layout_columnSpan="2"
             app:layout_rowWeight="1"
             app:layout_gravity="fill_horizontal"
@@ -73,6 +83,7 @@
         <TextView
             android:id="@+id/main_list_item_weather_description"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@{date.description}"
             app:layout_columnSpan="2"
             app:layout_rowWeight="1"
             app:layout_gravity="fill_horizontal"

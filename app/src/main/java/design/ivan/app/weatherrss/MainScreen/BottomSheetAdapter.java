@@ -1,14 +1,15 @@
 package design.ivan.app.weatherrss.MainScreen;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
 import design.ivan.app.weatherrss.Model.Place;
 import design.ivan.app.weatherrss.R;
+import design.ivan.app.weatherrss.databinding.BottomListItemBinding;
 
 /**
  * Created by ivanm on 7/30/16.
@@ -20,20 +21,19 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
 
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.bottom_list_item, viewGroup, false);
-        view.setFocusable(true);
-        return new PlaceViewHolder(view);
+
+        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        BottomListItemBinding binding = DataBindingUtil
+                .inflate(layoutInflater, R.layout.bottom_list_item, viewGroup, false);
+
+        return new PlaceViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(PlaceViewHolder viewHolder, int position) {
         Place place = arrayPlaces.get(position);
-        /*viewHolder.title.setText(place.getName());
-        viewHolder.maxTemp.setText(place.getTempMax());
-        viewHolder.maxPhenomenon.setText(place.getPhenomenon());
-        viewHolder.minTemp.setText(place.getTempMin());
-        viewHolder.minPhenomenon.setText(place.getPhenomenonExtra());*/
+        viewHolder.binding.setPlace(place);
+        viewHolder.binding.executePendingBindings();
     }
 
     @Override
@@ -49,19 +49,11 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     }
 
     public static class PlaceViewHolder extends RecyclerView.ViewHolder{
-        /*@BindView(R.id.bottom_item_title)
-        TextView title;
-        @BindView(R.id.bottom_item_max_temp)
-        TextView maxTemp;
-        @BindView(R.id.bottom_item_min_temp)
-        TextView minTemp;
-        @BindView(R.id.bottom_item_max_phen)
-        TextView maxPhenomenon;
-        @BindView(R.id.bottom_item_min_phen)
-        TextView minPhenomenon;*/
-        public PlaceViewHolder(View itemView) {
-            super(itemView);
-            //ButterKnife.bind(this, itemView);
+        BottomListItemBinding binding;
+
+        public PlaceViewHolder(BottomListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 

@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     //+++ End MainPresenter implementation +++
 
     //@OnClick(R.id.main_button_refresh)
-    public void refreshClick(){
+    public void refreshClick(View view){
         actionListener.getRSSFeed(true);
     }
 

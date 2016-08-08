@@ -69,35 +69,35 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         }
 
         if(isCurrentDay){
+            //we are binding a Model to the layout with its respective values to the variable defined on the layout xml
+            holder.firstBinding.itemDay.setDate(day);
+            holder.firstBinding.itemNight.setDate(night);
+            //bind titles and anything that goes directly to a View with no Model related to it.
             holder.firstBinding.itemDateTitle.setText(forecastSparseArray.valueAt(position).getFormattedDate());
-            holder.firstBinding.itemNight.mainListItemMinWind.setText(night.getWindMin());
-            holder.firstBinding.itemNight.mainListItemMaxWind.setText(night.getWindMax());
-            holder.firstBinding.itemDay.mainListItemMinWind.setText(day.getWindMin());
-            holder.firstBinding.itemDay.mainListItemMaxWind.setText(day.getWindMax());
-            holder.firstBinding.itemNight.mainListItemWeatherDescription.setText(night.getDescription());
-            holder.firstBinding.itemDay.mainListItemWeatherDescription.setText(day.getDescription());
-            holder.firstBinding.itemDay.mainListItemTempText.setText(day.getTempPhrase());
-            holder.firstBinding.itemNight.mainListItemTempText.setText(night.getTempPhrase());
+            holder.firstBinding.itemDay.mainListItemTitle.setText(R.string.day);
+            holder.firstBinding.itemNight.mainListItemTitle.setText(R.string.night);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = holder.getAdapterPosition();
-                    if(RecyclerView.NO_POSITION != position){
+                    if(RecyclerView.NO_POSITION != position){ //always check we might get a NO_POSITION because user clicked too fast
                         Forecast forecast = forecastSparseArray.valueAt(position);
                         clickHandler.onClickItem(forecast.getDate());
                     }
 
                 }
             });
+            holder.firstBinding.executePendingBindings();//important to add this line otherwise recyclerView might have to measure twice before getting it right
             return;
         }
+        //Binding to the layout using a Model
+        holder.binding.itemNight.setDate(night);
+        holder.binding.itemDay.setDate(day);
+        //Binding to the layout directly by setting all TextViews from code
         holder.binding.itemDateTitle.setText(forecastSparseArray.valueAt(position).getFormattedDate());
-        holder.binding.itemNight.mainListItemMinTemp.setText(night.getTempMinFormatted());
-        holder.binding.itemNight.mainListItemMaxTemp.setText(night.getTempMaxFormatted());
-        holder.binding.itemDay.mainListItemMinTemp.setText(day.getTempMinFormatted());
-        holder.binding.itemDay.mainListItemMaxTemp.setText(day.getTempMaxFormatted());
         holder.binding.itemDay.mainListItemTitle.setText(R.string.day);
         holder.binding.itemNight.mainListItemTitle.setText(R.string.night);
+        holder.binding.executePendingBindings();//always execute this method for performance reasons
     }
 
     @Override

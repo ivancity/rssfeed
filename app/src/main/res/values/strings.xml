@@ -10,7 +10,7 @@
     <string name="night">Night</string>
     <string name="format_temperature_words">As warm as <xliff:g id="max" ctype="bold">%1$s</xliff:g> degrees, and as cold as <xliff:g id="min" ctye="bold">%2$s</xliff:g> degrees</string>
     <string name="format_temperature"><xliff:g id="temp">%1$s</xliff:g>ºC</string>
-    <string name="format_wind"><xliff:g id="wind">%1$s</xliff:g>kn</string>
+    <string name="format_wind"><xliff:g id="wind">%1$s</xliff:g>m/s</string>
     <string name="format_date"><xliff:g id="month">%1$s</xliff:g> <xliff:g id="day">%2$s</xliff:g>, <xliff:g id="year">%3$s</xliff:g></string>
     <string name="format_today">Today, <xliff:g id="month">%1$s</xliff:g> <xliff:g id="day">%2$s</xliff:g></string>
     <string name="format_tomorrow">Tomorrow, <xliff:g id="month">%1$s</xliff:g> <xliff:g id="day">%2$s</xliff:g></string>

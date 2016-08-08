@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="10dp"
+            android:onClick="refreshClick"
             app:srcCompat="@drawable/ic_autorenew_white_24px"
             app:borderWidth="0dp"
             app:layout_behavior="design.ivan.app.weatherrss.ui.RefreshFabBehavior"/>

@@ -1,56 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="@style/GridlayoutStyle"
-    tools:background="@color/cardview_dark_background"
-    app:columnCount="2">
-    <TextView
-        android:id="@+id/bottom_item_title"
-        android:gravity="center_horizontal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_columnSpan="2"
-        app:layout_columnWeight="1"
-        app:layout_gravity="fill_horizontal"
-        tools:text="Location"/>
-    <TextView
-        android:id="@+id/bottom_item_max_temp"
-        android:layout_width="0dp"
-        android:maxHeight="@dimen/list_item_first_high"
-        android:maxWidth="@dimen/list_item_first_high"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/list_item_text_high"
-        app:layout_columnWeight="1"
-        app:layout_gravity="fill_horizontal"
-        tools:text="30ºC" />
-    <TextView
-        android:id="@+id/bottom_item_max_phen"
-        android:layout_width="0dp"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        app:layout_columnWeight="1"
-        app:layout_gravity="fill_horizontal"
-        tools:text="Moderate shower"/>
-
-    <TextView
-        android:id="@+id/bottom_item_min_temp"
-        android:layout_width="0dp"
-        android:maxHeight="@dimen/list_item_first_low"
-        android:maxWidth="@dimen/list_item_first_low"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/list_item_text_low"
-        app:layout_columnWeight="1"
-        app:layout_gravity="fill_horizontal"
-        tools:text="10ºC"/>
-    <TextView
-        android:id="@+id/bottom_item_min_phen"
-        android:layout_width="0dp"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_columnWeight="1"
-        app:layout_gravity="fill_horizontal"
-        tools:text="Moderate shower"/>
-
-</android.support.v7.widget.GridLayout>
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="place"
+            type="design.ivan.app.weatherrss.Model.Place"/>
+    </data>
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/GridlayoutStyle"
+        tools:background="@color/cardview_dark_background"
+        app:columnCount="2">
+        <TextView
+            android:id="@+id/bottom_item_title"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@{place.name}"
+            app:layout_columnSpan="2"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
+            tools:text="Location"/>
+        <TextView
+            android:id="@+id/bottom_item_max_temp"
+            android:layout_width="0dp"
+            android:maxHeight="@dimen/list_item_first_high"
+            android:maxWidth="@dimen/list_item_first_high"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/list_item_text_high"
+            android:text="@{place.tempMax}"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
+            tools:text="30ºC" />
+        <TextView
+            android:id="@+id/bottom_item_max_phen"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:text="@{place.phenomenon}"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
+            tools:text="Moderate shower"/>
+        <TextView
+            android:id="@+id/bottom_item_min_temp"
+            android:layout_width="0dp"
+            android:maxHeight="@dimen/list_item_first_low"
+            android:maxWidth="@dimen/list_item_first_low"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/list_item_text_low"
+            android:text="@{place.tempMin}"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
+            tools:text="10ºC"/>
+        <TextView
+            android:id="@+id/bottom_item_min_phen"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:text="@{place.phenomenonExtra}"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
+            tools:text="Moderate shower"/>
+    </android.support.v7.widget.GridLayout>
+</layout>
