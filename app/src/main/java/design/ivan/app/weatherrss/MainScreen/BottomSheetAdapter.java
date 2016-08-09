@@ -25,15 +25,14 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
         BottomListItemBinding binding = DataBindingUtil
                 .inflate(layoutInflater, R.layout.bottom_list_item, viewGroup, false);
-
         return new PlaceViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(PlaceViewHolder viewHolder, int position) {
         Place place = arrayPlaces.get(position);
-        viewHolder.binding.setPlace(place);
-        viewHolder.binding.executePendingBindings();
+        viewHolder.binding.setPlace(place); //Bind Model to our Layout through place variable in xml
+        viewHolder.binding.executePendingBindings();//do this for performance reasons
     }
 
     @Override

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="presenter"
+            type="design.ivan.app.weatherrss.MainScreen.IMainContract.ActionListener"/>
+    </data>
     <android.support.design.widget.CoordinatorLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -48,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="10dp"
-            android:onClick="refreshClick"
+            android:onClick="@{()->presenter.getRSSFeed(true)}"
             app:srcCompat="@drawable/ic_autorenew_white_24px"
             app:borderWidth="0dp"
             app:layout_behavior="design.ivan.app.weatherrss.ui.RefreshFabBehavior"/>

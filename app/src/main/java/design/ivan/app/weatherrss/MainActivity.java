@@ -43,12 +43,13 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
-
         //use android data binding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initUi();
         actionListener = new MainPresenter(Injection.loadForecastRepository(), this);
+        //passing a presenter to our binding, calling a method directly from xml using a lambda expression
+        //check FAB on xml and the lambda calling getRSSFeed()
+        binding.setPresenter(actionListener);
         showMessage(R.string.no_data);
         actionListener.getRSSFeed(false);
     }
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: ");
         //if it was previously scrolled find the correct position to display
         if (binding.mainRecyclerView.getLayoutManager() != null) {
             scrollPosition = ((LinearLayoutManager) binding.mainRecyclerView.getLayoutManager())
@@ -69,15 +69,8 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop: ");
         actionListener.clearListeners(this);
     }
 
@@ -189,12 +182,6 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     }
 
     //+++ End MainPresenter implementation +++
-
-    //@OnClick(R.id.main_button_refresh)
-    public void refreshClick(View view){
-        actionListener.getRSSFeed(true);
-    }
-
 
     //ForecastAdapterOnClickHandler implementation from ForecastAdapter
     @Override
