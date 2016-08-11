@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import design.ivan.app.weatherrss.MainActivity;
 import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.R;
 import design.ivan.app.weatherrss.databinding.MainListItemBinding;
@@ -27,12 +26,10 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     private static final int VIEWTYPE_CURRENT = 0;
     private static final int VIEWTYPE_GENERIC = 1;
 
-    ForecastAdapterOnClickHandler clickHandler;
     private SparseArray<Forecast> forecastSparseArray;
+    IMainContract.ActionListener actionListener;
 
-    public ForecastAdapter(MainActivity mainActivity){
-        this.clickHandler = mainActivity;
-    }
+    public ForecastAdapter(IMainContract.ActionListener actionListener){ this.actionListener = actionListener;}
 
     @Override
     public int getItemViewType(int position) {
@@ -72,17 +69,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         if(isCurrentDay){
             //we are binding a Model Forecast to the layout with its respective values to the variable defined on the layout xml
             holder.firstBinding.setForecast(forecast);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = holder.getAdapterPosition();
-                    if(RecyclerView.NO_POSITION != position){ //always check we might get a NO_POSITION because user clicked too fast
-                        Forecast forecast = forecastSparseArray.valueAt(position);
-                        clickHandler.onClickItem(forecast.getDate());
-                    }
-
-                }
-            });
+            //we are doing this to enable onClick to refer directly to our Presenter using a lambda expression in the layout file
+            holder.firstBinding.setActionListener(actionListener);
             holder.firstBinding.executePendingBindings();//important to add this line otherwise recyclerView might have to measure twice before getting it right
             return;
         }

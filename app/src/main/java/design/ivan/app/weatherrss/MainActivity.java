@@ -21,8 +21,7 @@ import design.ivan.app.weatherrss.Model.Forecast;
 import design.ivan.app.weatherrss.Repo.Injection;
 import design.ivan.app.weatherrss.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements IMainContract.MainView,
-        ForecastAdapter.ForecastAdapterOnClickHandler
+public class MainActivity extends AppCompatActivity implements IMainContract.MainView
 {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
         //use android data binding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initUi();
-        actionListener = new MainPresenter(Injection.loadForecastRepository(), this);
         //passing a presenter to our binding, calling a method directly from xml using a lambda expression
         //check FAB on xml and the lambda calling getRSSFeed()
         binding.setPresenter(actionListener);
@@ -78,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
 
     @Override
     public void initUi() {
+        actionListener = new MainPresenter(Injection.loadForecastRepository(), this);
+
         //using binding auto generated object to initialize some views
 
         //toolbar
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
         //main recycler view
         binding.mainRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.mainRecyclerView.setHasFixedSize(true);
-        forecastAdapter = new ForecastAdapter(this);
+        forecastAdapter = new ForecastAdapter(actionListener);
         binding.mainRecyclerView.setAdapter(forecastAdapter);
 
         //bottom sheet recycler view. included <layout> tags to all necessary layouts
@@ -182,11 +182,4 @@ public class MainActivity extends AppCompatActivity implements IMainContract.Mai
     }
 
     //+++ End MainPresenter implementation +++
-
-    //ForecastAdapterOnClickHandler implementation from ForecastAdapter
-    @Override
-    public void onClickItem(String date) {
-        Log.d(TAG, "onClickItem: clicked on date" + date);
-        actionListener.showPlaces(date);
-    }
 }
