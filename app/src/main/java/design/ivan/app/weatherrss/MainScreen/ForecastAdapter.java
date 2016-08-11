@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import design.ivan.app.weatherrss.MainActivity;
 import design.ivan.app.weatherrss.Model.Forecast;
-import design.ivan.app.weatherrss.Model.ForecastDate;
 import design.ivan.app.weatherrss.R;
 import design.ivan.app.weatherrss.databinding.MainListItemBinding;
 import design.ivan.app.weatherrss.databinding.MainListItemFirstBinding;
@@ -18,6 +17,8 @@ import design.ivan.app.weatherrss.databinding.MainListItemFirstBinding;
  * Created by ivanm on 7/14/16.
  */
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>{
+
+    private static final String TAG = "ForecastAdapter";
 
     public interface ForecastAdapterOnClickHandler {
         void onClickItem(String date);
@@ -58,8 +59,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     @Override
     public void onBindViewHolder(final ForecastViewHolder holder, int position) {
         boolean isCurrentDay;
-        ForecastDate night = forecastSparseArray.valueAt(position).getNight();
-        ForecastDate day = forecastSparseArray.valueAt(position).getDay();
+        //Getting our variable Forecast that is going to be used in the layout binding
+        Forecast forecast = forecastSparseArray.valueAt(position);
         switch (getItemViewType(position)){
             case VIEWTYPE_CURRENT:
                 isCurrentDay = true;
@@ -69,13 +70,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         }
 
         if(isCurrentDay){
-            //we are binding a Model to the layout with its respective values to the variable defined on the layout xml
-            holder.firstBinding.itemDay.setDate(day);
-            holder.firstBinding.itemNight.setDate(night);
-            //bind titles and anything that goes directly to a View with no Model related to it.
-            holder.firstBinding.itemDateTitle.setText(forecastSparseArray.valueAt(position).getFormattedDate());
-            holder.firstBinding.itemDay.mainListItemTitle.setText(R.string.day);
-            holder.firstBinding.itemNight.mainListItemTitle.setText(R.string.night);
+            //we are binding a Model Forecast to the layout with its respective values to the variable defined on the layout xml
+            holder.firstBinding.setForecast(forecast);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -90,13 +86,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
             holder.firstBinding.executePendingBindings();//important to add this line otherwise recyclerView might have to measure twice before getting it right
             return;
         }
-        //Binding to the layout using a Model
-        holder.binding.itemNight.setDate(night);
-        holder.binding.itemDay.setDate(day);
-        //Binding to the layout directly by setting all TextViews from code
-        holder.binding.itemDateTitle.setText(forecastSparseArray.valueAt(position).getFormattedDate());
-        holder.binding.itemDay.mainListItemTitle.setText(R.string.day);
-        holder.binding.itemNight.mainListItemTitle.setText(R.string.night);
+        //Binding to the layout using a Model Forecast
+        holder.binding.setForecast(forecast);
         holder.binding.executePendingBindings();//always execute this method for performance reasons
     }
 

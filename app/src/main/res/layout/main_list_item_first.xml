@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="forecast"
+            type="design.ivan.app.weatherrss.Model.Forecast"/>
+    </data>
     <LinearLayout
         android:id="@+id/layout_list_item_first"
         android:layout_width="match_parent"
@@ -14,6 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@{forecast.getFormattedDate()}"
             tools:text="12-7-2016"/>
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -28,7 +34,9 @@
                 android:id="@+id/item_day"
                 layout="@layout/list_item_first_day"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title="@{@string/day}"
+                app:date="@{forecast.getDay()}"/>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -44,7 +52,9 @@
                 android:id="@+id/item_night"
                 layout="@layout/list_item_first_day"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title="@{@string/night}"
+                app:date="@{forecast.getNight()}"/>
         </android.support.v7.widget.CardView>
     </LinearLayout>
 </layout>
